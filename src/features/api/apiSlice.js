@@ -14,7 +14,7 @@ const baseQuery = fetchBaseQuery({
     //     headers.set('Authorization', `Bearer ${token}`)
     // }
     // headers.set('Authorization', `Bearer ${token}`)
-    debugger
+
     await csrf()
     const token = decodeURIComponent(Cookies.get('XSRF-TOKEN'))
     // getCookie('XSRF-TOKEN')

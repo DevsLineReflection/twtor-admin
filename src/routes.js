@@ -49,9 +49,16 @@ const Modals = React.lazy(() => import('./views/notifications/modals/Modals'))
 const Toasts = React.lazy(() => import('./views/notifications/toasts/Toasts'))
 
 const Widgets = React.lazy(() => import('./views/widgets/Widgets'))
+const Language = React.lazy(() => import('./views/language/Language'))
+const AllStudyGroups = React.lazy(() => import('./views/studygroups/allstudygroups/AllStudyGroups'))
+const AllUsers = React.lazy(() => import('./views/usermanagement/alluser/UserList'))
 
 const routes = [
   { path: '/', exact: true, name: 'Home' },
+  { path: '/language', name: 'language', element: Language },
+  { path: '/allstudygroups', name: 'All Study Groups', element: AllStudyGroups },
+  { path: '/users', name: 'All Users', element: AllUsers },
+
   { path: '/dashboard', name: 'Dashboard', element: Dashboard },
   { path: '/theme', name: 'Theme', element: Colors, exact: true },
   { path: '/theme/colors', name: 'Colors', element: Colors },

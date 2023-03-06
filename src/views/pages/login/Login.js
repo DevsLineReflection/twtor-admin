@@ -12,6 +12,7 @@ import {
   CInputGroup,
   CInputGroupText,
   CRow,
+  CSpinner,
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import { cilLockLocked, cilUser } from '@coreui/icons'
@@ -25,7 +26,8 @@ const Login = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  const submitForm = () => {
+  const submitForm = async (event) => {
+    event.preventDefault()
     login({
       email,
       password,
@@ -40,9 +42,9 @@ const Login = () => {
             <CCardGroup>
               <CCard className="p-4">
                 <CCardBody>
-                  <CForm>
+                  <CForm onSubmit={submitForm}>
                     <h1>Login</h1>
-                    <p className="text-medium-emphasis">Sign In to your account</p>
+                    <p className="text-medium-emphasis">Twtor Admin Login</p>
                     <CInputGroup className="mb-3">
                       <CInputGroupText>
                         <CIcon icon={cilUser} />
@@ -52,6 +54,7 @@ const Login = () => {
                         autoComplete="username"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
+                        required
                       />
                     </CInputGroup>
                     <CInputGroup className="mb-4">
@@ -64,12 +67,22 @@ const Login = () => {
                         autoComplete="current-password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
+                        required
                       />
                     </CInputGroup>
+                    {error && <div className="mb-2 text-danger">{error?.data?.message}</div>}
                     <CRow>
                       <CCol xs={6}>
-                        <CButton color="primary" className="px-4" onClick={() => submitForm()}>
-                          Login
+                        <CButton color="primary" className="px-4" type="submit">
+                          Login{' '}
+                          {isLoading && (
+                            <div
+                              className="spinner-border spinner-grow-sm text-light "
+                              role="status"
+                            >
+                              <span className="visually-hidden">Loading...</span>
+                            </div>
+                          )}
                         </CButton>
                       </CCol>
                       {/* <CCol xs={6} className="text-right">

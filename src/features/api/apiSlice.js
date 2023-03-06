@@ -18,7 +18,7 @@ const baseQuery = fetchBaseQuery({
     await csrf()
     const token = decodeURIComponent(Cookies.get('XSRF-TOKEN'))
     // getCookie('XSRF-TOKEN')
-    headers.set('XSRF-TOKEN', token)
+    headers.set('X-XSRF-TOKEN', token)
     // if (!headers.has('Content-Type')) {
     //     headers.set('Content-Type', 'application/json')
     // }

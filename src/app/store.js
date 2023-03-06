@@ -10,6 +10,7 @@ import chapterSliceReducer from '../features/chapter/chapterSlice'
 import problemSliceReducer from '../features/problem/problemSlice'
 import solutionSliceReducer from '../features/solution/solutionSlice'
 import sidebarSliceReducer from '../features/sidebar/sidebarSlice'
+import languageSliceReducer from '../features/language/languageSlice'
 
 export const store = configureStore({
   reducer: {
@@ -23,6 +24,7 @@ export const store = configureStore({
     problem: problemSliceReducer,
     solution: solutionSliceReducer,
     sidebar: sidebarSliceReducer,
+    language: languageSliceReducer,
   },
   devTools: process.env.REACT_PUBLIC_ENV !== 'production',
   middleware: (getDefaultMiddlewares) => getDefaultMiddlewares().concat(apiSlice.middleware),

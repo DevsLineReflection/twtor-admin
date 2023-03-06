@@ -14,10 +14,11 @@ const baseQuery = fetchBaseQuery({
     //     headers.set('Authorization', `Bearer ${token}`)
     // }
     // headers.set('Authorization', `Bearer ${token}`)
+    debugger
     await csrf()
-    const token = decodeURIComponent(Cookies.get('X-XSRF-TOKEN'))
+    const token = decodeURIComponent(Cookies.get('XSRF-TOKEN'))
     // getCookie('XSRF-TOKEN')
-    headers.set('X-XSRF-TOKEN', token)
+    headers.set('XSRF-TOKEN', token)
     // if (!headers.has('Content-Type')) {
     //     headers.set('Content-Type', 'application/json')
     // }

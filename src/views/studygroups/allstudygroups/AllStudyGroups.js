@@ -125,7 +125,7 @@ const AllStudyGroups = () => {
                 <ul className="pagination">
                   {bookclubs?.links?.map((item) => (
                     <li
-                      className={`page-item ${item.active && "active"} ${
+                      className={`page-item ${item.label == page && "active"} ${
                         !item.url && "disabled"
                       }`}
                       style={{ cursor: item.url ? "pointer" : "not-allowed" }}

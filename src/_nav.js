@@ -1,5 +1,5 @@
-import React from 'react'
-import CIcon from '@coreui/icons-react'
+import React from "react";
+import CIcon from "@coreui/icons-react";
 import {
   cilAccountLogout,
   cilBell,
@@ -15,43 +15,43 @@ import {
   cilSpeedometer,
   cilStar,
   cilUser,
-} from '@coreui/icons'
-import { CNavGroup, CNavItem, CNavTitle } from '@coreui/react'
+} from "@coreui/icons";
+import { CNavGroup, CNavItem, CNavTitle } from "@coreui/react";
 
 const _nav = [
   {
     component: CNavItem,
-    name: 'Dashboard',
-    to: '/dashboard',
+    name: "Dashboard",
+    to: "/dashboard",
     icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
     badge: {
-      color: 'info',
-      text: 'NEW',
+      color: "info",
+      text: "NEW",
     },
   },
   // {
   //   component: CNavTitle,
   //   name: 'Theme',
   // },
-  {
-    component: CNavItem,
-    name: 'Language',
-    to: '/language',
-    icon: <CIcon icon={cilLanguage} customClassName="nav-icon" />,
-  },
+
   {
     component: CNavTitle,
-    name: 'Components',
+    name: "Components",
   },
   {
     component: CNavGroup,
-    name: 'Study Groups',
+    name: "Study Groups",
     icon: <CIcon icon={cilPuzzle} customClassName="nav-icon" />,
     items: [
       {
         component: CNavItem,
-        name: 'All Study Groups',
-        to: '/allstudygroups',
+        name: "All Study Groups",
+        to: "/allstudygroups",
+      },
+      {
+        component: CNavItem,
+        name: "Class Labels",
+        to: "/classlabels",
       },
       // {
       //   component: CNavItem,
@@ -261,17 +261,17 @@ const _nav = [
   // },
   {
     component: CNavTitle,
-    name: 'User Management',
+    name: "User Management",
   },
   {
     component: CNavGroup,
-    name: 'User List',
+    name: "User List",
     icon: <CIcon icon={cilUser} customClassName="nav-icon" />,
     items: [
       {
         component: CNavItem,
-        name: 'Users',
-        to: '/users',
+        name: "Users",
+        to: "/users",
       },
       // {
       //   component: CNavItem,
@@ -290,12 +290,29 @@ const _nav = [
       // },
     ],
   },
+  {
+    component: CNavTitle,
+    name: "Settings",
+  },
+  {
+    component: CNavItem,
+    name: "Country",
+    to: "/country",
+    icon: <CIcon icon={cilPuzzle} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
+    name: "Language",
+    to: "/language",
+    icon: <CIcon icon={cilLanguage} customClassName="nav-icon" />,
+  },
+
   // {
   //   component: CNavItem,
   //   name: 'Docs',
   //   href: 'https://coreui.io/react/docs/templates/installation/',
   //   icon: <CIcon icon={cilDescription} customClassName="nav-icon" />,
   // },
-]
+];
 
-export default _nav
+export default _nav;

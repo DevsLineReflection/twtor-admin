@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState } from "react";
 import {
   CCard,
   CCardHeader,
@@ -17,55 +17,111 @@ import {
   CInputGroup,
   CInputGroupText,
   CFormInput,
-} from '@coreui/react'
-import { useGetLanguageQuery } from 'src/features/language/languageApi'
+} from "@coreui/react";
+import { useGetLanguageQuery } from "src/features/language/languageApi";
+import axios from "../../lib/axios";
 
 const Language = () => {
-  const { data: language, isLoading, error } = useGetLanguageQuery()
-  const [addLanguage, setAddLanguage] = useState(false)
-
-  const toggleAddLanguage = () => {
-    setAddLanguage((prev) => !prev)
-  }
+  const { data: language, isLoading, error } = useGetLanguageQuery();
+  const [addLanguage, setAddLanguage] = useState(false);
+  const [ShortName, setShortName] = useState("");
+  const [LanguageName, setLanguageName] = useState("");
+  const [ShortNameError, setShortNameError] = useState("");
 
   const submitForm = async (event) => {
-    event.preventDefault()
-  }
+    event.preventDefault();
+  };
+
+  const shortNameChange = async (val) => {
+    setShortName(val);
+    axios.get(`/api/admin/check_shortname_language/${val}`).then((res) => {
+      debugger;
+      if (!(res.data === 0)) {
+        setShortNameError("Already Exists");
+      } else {
+        setShortNameError("");
+      }
+    });
+  };
+
+  const debounce = (fn, delay) => {
+    let timer;
+    return (...args) => {
+      if (timer) {
+        clearTimeout(timer);
+      }
+      timer = setTimeout(() => {
+        fn(...args);
+      }, delay);
+    };
+  };
+
+  const handleshortNameChange = debounce(
+    (value) => shortNameChange(value),
+    150
+  );
 
   return (
     <>
       {addLanguage && (
         <CCard className="mb-4">
-          <CCardHeader>Add Language</CCardHeader>
+          <CCardHeader className="d-flex justify-content-between">
+            Add Language
+            <div className="d-flex justify-content-end">
+              <CButton
+                className=""
+                color="warning"
+                onClick={() => setAddLanguage(false)}
+              >
+                Close
+              </CButton>
+            </div>
+          </CCardHeader>
           <CCardBody className="justify-content-center">
             <CRow className="justify-content-center">
               <CCol md={5}>
                 <CForm onSubmit={submitForm}>
-                  <CInputGroup className="mb-3">
+                  <CInputGroup>
                     <CFormInput
                       type="text"
                       placeholder="Short Name"
+                      defaultValue={ShortName}
                       //   value={email}
-                      //   onChange={(e) => setEmail(e.target.value)}
+                      onChange={(e) => handleshortNameChange(e.target.value)}
                       required
-                    />
+                    />{" "}
                   </CInputGroup>
-                  <CInputGroup className="mb-4">
+                  {ShortNameError && (
+                    <span className="text-danger">{ShortNameError}</span>
+                  )}
+                  <CInputGroup className="my-2">
                     <CFormInput
                       type="text"
                       placeholder="Language Name"
-                      //   value={password}
-                      //   onChange={(e) => setPassword(e.target.value)}
+                      value={LanguageName}
+                      onChange={(e) => setLanguageName(e.target.value)}
                       required
                     />
                   </CInputGroup>
-                  {error && <div className="mb-2 text-danger">{error?.data?.message}</div>}
+                  {error && (
+                    <div className="mb-2 text-danger">
+                      {error?.data?.message}
+                    </div>
+                  )}
                   <CRow>
                     <CCol xs={6}>
-                      <CButton color="primary" className="px-4" type="submit">
-                        Add{' '}
+                      <CButton
+                        color="primary"
+                        className="px-4"
+                        type="submit"
+                        disabled={ShortNameError}
+                      >
+                        Add{" "}
                         {isLoading && (
-                          <div className="spinner-border spinner-grow-sm text-light " role="status">
+                          <div
+                            className="spinner-border spinner-grow-sm text-light "
+                            role="status"
+                          >
                             <span className="visually-hidden">Loading...</span>
                           </div>
                         )}
@@ -81,11 +137,17 @@ const Language = () => {
       <CCard className="mb-4">
         <CCardHeader className="d-flex justify-content-between">
           Twtor Languages
-          <div className="d-flex justify-content-end">
-            <CButton className="" color="primary" onClick={toggleAddLanguage}>
-              Add Language
-            </CButton>
-          </div>
+          {!addLanguage && (
+            <div className="d-flex justify-content-end">
+              <CButton
+                className=""
+                color="info"
+                onClick={() => setAddLanguage(true)}
+              >
+                Add Language
+              </CButton>
+            </div>
+          )}
         </CCardHeader>
         <CCardBody>
           <CTable striped>
@@ -94,7 +156,7 @@ const Language = () => {
                 <CTableHeaderCell scope="col">#</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Short Name</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Language</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Action</CTableHeaderCell>
+                {/* <CTableHeaderCell scope="col">Action</CTableHeaderCell> */}
               </CTableRow>
             </CTableHead>
             <CTableBody>
@@ -103,9 +165,9 @@ const Language = () => {
                   <CTableHeaderCell scope="row">{item.id}</CTableHeaderCell>
                   <CTableDataCell>{item.short_name}</CTableDataCell>
                   <CTableDataCell>{item.languages}</CTableDataCell>
-                  <CTableDataCell>
+                  {/* <CTableDataCell>
                     <CButton color="warning">Edit</CButton>
-                  </CTableDataCell>
+                  </CTableDataCell> */}
                 </CTableRow>
               ))}
             </CTableBody>
@@ -113,7 +175,7 @@ const Language = () => {
         </CCardBody>
       </CCard>
     </>
-  )
-}
+  );
+};
 
-export default Language
+export default Language;

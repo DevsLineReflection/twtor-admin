@@ -1,11 +1,11 @@
-import { apiSlice } from '../api/apiSlice'
+import { apiSlice } from "../api/apiSlice";
 
 export const languageApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getLanguage: builder.query({
-      query: () => `/api/language`,
+      query: () => `/api/admin/language`,
     }),
   }),
-})
+});
 
-export const { useGetLanguageQuery } = languageApi
+export const { useGetLanguageQuery } = languageApi;

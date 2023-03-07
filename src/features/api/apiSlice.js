@@ -1,10 +1,10 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { userLoggedOut } from '../auth/authSlice'
-import axios from '../../lib/axios'
-import Cookies from 'js-cookie'
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { userLoggedOut } from "../auth/authSlice";
+import axios from "../../lib/axios";
+import Cookies from "js-cookie";
 // import { getCookie } from 'cookies-next'
 
-const csrf = () => axios.get('/sanctum/csrf-cookie')
+const csrf = () => axios.get("/sanctum/csrf-cookie");
 
 const baseQuery = fetchBaseQuery({
   baseUrl: process.env.REACT_APP_PUBLIC_BACKEND_URL,
@@ -15,31 +15,32 @@ const baseQuery = fetchBaseQuery({
     // }
     // headers.set('Authorization', `Bearer ${token}`)
 
-    await csrf()
-    const token = decodeURIComponent(Cookies.get('XSRF-TOKEN'))
+    await csrf();
+    const token = decodeURIComponent(Cookies.get("XSRF-TOKEN"));
     // getCookie('XSRF-TOKEN')
-    headers.set('X-XSRF-TOKEN', token)
+    headers.set("X-XSRF-TOKEN", token);
     // if (!headers.has('Content-Type')) {
     //     headers.set('Content-Type', 'application/json')
     // }
-    headers.set('X-Requested-With', `XMLHttpRequest`)
-    headers.set('Access-Control-Allow-Origin', '*')
+    headers.set("X-Requested-With", `XMLHttpRequest`);
+    headers.set("Access-Control-Allow-Origin", "*");
 
-    return headers
+    return headers;
   },
-  credentials: 'include',
-})
+  credentials: "include",
+});
 
 export const apiSlice = createApi({
-  reducerPath: 'api',
+  reducerPath: "apis",
   baseQuery: async (args, api, extraOptions) => {
-    let result = await baseQuery(args, api, extraOptions)
+    let result = await baseQuery(args, api, extraOptions);
+    debugger;
     if (result?.error?.status === 401) {
-      api.dispatch(userLoggedOut())
-      localStorage.clear()
+      api.dispatch(userLoggedOut());
+      localStorage.clear();
     }
-    return result
+    return result;
   },
   tagTypes: [],
   endpoints: (builder) => ({}),
-})
+});

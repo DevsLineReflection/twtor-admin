@@ -36,7 +36,6 @@ const AllStudyGroups = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    debugger;
     if (page > 1) {
       dispatch(bookclubApi.endpoints.getbookclubs.initiate(page));
     }
@@ -46,6 +45,7 @@ const AllStudyGroups = () => {
     let checkPage = url.match(/page=([0-9]+)/, "");
     if (checkPage && checkPage[1]) {
       setPage(parseInt(checkPage[1]));
+      navigate(`/allstudygroups?page=${parseInt(checkPage[1])}`);
     }
   };
 
@@ -59,7 +59,7 @@ const AllStudyGroups = () => {
               <CTableRow>
                 <CTableHeaderCell scope="col">#</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Name</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Multiple</CTableHeaderCell>
+                {/* <CTableHeaderCell scope="col">Multiple</CTableHeaderCell> */}
                 <CTableHeaderCell scope="col">Access Right</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Subscription</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Active</CTableHeaderCell>
@@ -71,7 +71,7 @@ const AllStudyGroups = () => {
               {isLoading || isFetching ? (
                 <>
                   <CTableRow>
-                    <CTableDataCell className="text-center" colSpan={8}>
+                    <CTableDataCell className="text-center" colSpan={7}>
                       Loading...
                     </CTableDataCell>
                   </CTableRow>
@@ -81,11 +81,11 @@ const AllStudyGroups = () => {
                   <CTableRow>
                     <CTableHeaderCell scope="row">{item.id}</CTableHeaderCell>
                     <CTableDataCell>{item.name}</CTableDataCell>
-                    <CTableDataCell>
+                    {/* <CTableDataCell>
                       <CBadge color={GetBadge(item.is_multiple)}>
                         {item.is_multiple ? "Allowed" : "Not Allowed"}
                       </CBadge>
-                    </CTableDataCell>
+                    </CTableDataCell> */}
                     <CTableDataCell>
                       <CBadge color={GetBadge(item.public_or_private)}>
                         {item.public_or_private ? "Private" : "Public"}

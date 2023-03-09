@@ -118,7 +118,22 @@ const WidgetsDropdown = () => {
                     backgroundColor: "transparent",
                     borderColor: "rgba(255,255,255,.55)",
                     pointBackgroundColor: getStyle("--cui-primary"),
-                    data: dataUserMonth,
+                    data: isLoading
+                      ? dataUserMonth
+                      : [
+                          getTotalByMonth("January"),
+                          getTotalByMonth("February"),
+                          getTotalByMonth("March"),
+                          getTotalByMonth("April"),
+                          getTotalByMonth("May"),
+                          getTotalByMonth("June"),
+                          getTotalByMonth("July"),
+                          getTotalByMonth("August"),
+                          getTotalByMonth("September"),
+                          getTotalByMonth("October"),
+                          getTotalByMonth("November"),
+                          getTotalByMonth("December"),
+                        ],
                   },
                 ],
               }}
@@ -140,8 +155,8 @@ const WidgetsDropdown = () => {
                     },
                   },
                   y: {
-                    min: 30,
-                    max: 89,
+                    min: 0,
+                    // max: 89,
                     display: false,
                     grid: {
                       display: false,

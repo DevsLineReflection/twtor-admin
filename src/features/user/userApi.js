@@ -6,6 +6,9 @@ export const userApi = apiSlice.injectEndpoints({
     getUsers: builder.query({
       query: (page = 1) => `/api/admin/user?page=${page}`,
     }),
+    getUserReport: builder.query({
+      query: () => `/api/admin/getUserReport`,
+    }),
     getUser: builder.query({
       query: () => `/api/get_user`,
       async onQueryStarted(arg, { queryFulfilled, dispatch }) {
@@ -39,6 +42,10 @@ export const userApi = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useGetUserQuery, useInviteMembersMutation, useGetUsersQuery } =
-  userApi;
+export const {
+  useGetUserQuery,
+  useInviteMembersMutation,
+  useGetUsersQuery,
+  useGetUserReportQuery,
+} = userApi;
 export const { getUser, getUsers } = userApi.endpoints;

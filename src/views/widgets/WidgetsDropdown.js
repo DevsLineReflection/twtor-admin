@@ -14,6 +14,7 @@ import { CChartBar, CChartLine } from "@coreui/react-chartjs";
 import CIcon from "@coreui/icons-react";
 import { cilArrowBottom, cilArrowTop, cilOptions } from "@coreui/icons";
 import { useGetUserReportQuery } from "src/features/user/userApi";
+import { useGetBookclubReportQuery } from "src/features/bookclub/bookclubApi";
 
 const WidgetsDropdown = () => {
   const {
@@ -23,13 +24,34 @@ const WidgetsDropdown = () => {
     isFetching,
   } = useGetUserReportQuery();
 
-  const [userData, setUserData] = useState("");
+  const {
+    data: bookclubReport,
+    isLoading: bookclubLoading,
+    error: bookclubError,
+  } = useGetBookclubReportQuery();
 
-  let dataUserMonth = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+  const [userData, setUserData] = useState("");
+  const [dataUserMonth, setDataUserMonth] = useState([
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+  ]);
+  const [dataBookclubMonth, setDataBookclubMonth] = useState([
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+  ]);
+  const [bookclubData, setbookclubData] = useState("");
+
   const getTotalByMonth = (month) => {
-    if (userData) {
-      debugger;
-      let findItem = userData?.find((item) => item.month == month);
+    if (userReport.report) {
+      let findItem = userReport.report?.find((item) => item.month == month);
+
+      if (findItem) {
+        return findItem.total;
+      }
+    }
+    return 0;
+  };
+  const getTotalBookclubByMonth = (month) => {
+    if (bookclubReport.report) {
+      let findItem = bookclubReport.report?.find((item) => item.month == month);
 
       if (findItem) {
         return findItem.total;
@@ -40,7 +62,7 @@ const WidgetsDropdown = () => {
 
   if (!isLoading && userReport && !userData) {
     setUserData(userReport.report);
-    dataUserMonth = [
+    setDataUserMonth([
       getTotalByMonth("January"),
       getTotalByMonth("February"),
       getTotalByMonth("March"),
@@ -53,7 +75,25 @@ const WidgetsDropdown = () => {
       getTotalByMonth("October"),
       getTotalByMonth("November"),
       getTotalByMonth("December"),
-    ];
+    ]);
+  }
+
+  if (!bookclubLoading && bookclubReport && !bookclubData) {
+    setbookclubData(bookclubReport.report);
+    setDataBookclubMonth([
+      getTotalByMonth("January"),
+      getTotalByMonth("February"),
+      getTotalByMonth("March"),
+      getTotalByMonth("April"),
+      getTotalByMonth("May"),
+      getTotalByMonth("June"),
+      getTotalByMonth("July"),
+      getTotalByMonth("August"),
+      getTotalByMonth("September"),
+      getTotalByMonth("October"),
+      getTotalByMonth("November"),
+      getTotalByMonth("December"),
+    ]);
   }
 
   return (
@@ -118,22 +158,7 @@ const WidgetsDropdown = () => {
                     backgroundColor: "transparent",
                     borderColor: "rgba(255,255,255,.55)",
                     pointBackgroundColor: getStyle("--cui-primary"),
-                    data: isLoading
-                      ? dataUserMonth
-                      : [
-                          getTotalByMonth("January"),
-                          getTotalByMonth("February"),
-                          getTotalByMonth("March"),
-                          getTotalByMonth("April"),
-                          getTotalByMonth("May"),
-                          getTotalByMonth("June"),
-                          getTotalByMonth("July"),
-                          getTotalByMonth("August"),
-                          getTotalByMonth("September"),
-                          getTotalByMonth("October"),
-                          getTotalByMonth("November"),
-                          getTotalByMonth("December"),
-                        ],
+                    data: dataUserMonth,
                   },
                 ],
               }}
@@ -189,7 +214,9 @@ const WidgetsDropdown = () => {
           color="info"
           value={
             <>
-              15{" "}
+              {bookclubReport && bookclubReport.total
+                ? bookclubReport.total
+                : "..."}{" "}
               {/* <span className="fs-6 fw-normal">
                 (40.9% <CIcon icon={cilArrowTop} />)
               </span> */}
@@ -209,10 +236,9 @@ const WidgetsDropdown = () => {
                 />
               </CDropdownToggle>
               <CDropdownMenu>
-                <CDropdownItem>Action</CDropdownItem>
-                <CDropdownItem>Another action</CDropdownItem>
-                <CDropdownItem>Something else here...</CDropdownItem>
-                <CDropdownItem disabled>Disabled action</CDropdownItem>
+                <Link to="/allstudygroups">
+                  <CDropdownItem>Study Groups</CDropdownItem>
+                </Link>
               </CDropdownMenu>
             </CDropdown>
           }
@@ -229,14 +255,19 @@ const WidgetsDropdown = () => {
                   "May",
                   "June",
                   "July",
+                  "August",
+                  "September",
+                  "October",
+                  "November",
+                  "December",
                 ],
                 datasets: [
                   {
-                    label: "My First dataset",
+                    label: "Study Groups",
                     backgroundColor: "transparent",
                     borderColor: "rgba(255,255,255,.55)",
                     pointBackgroundColor: getStyle("--cui-info"),
-                    data: [1, 18, 9, 17, 34, 22, 11],
+                    data: dataBookclubMonth,
                   },
                 ],
               }}

@@ -86,6 +86,20 @@ const AllUsers = React.lazy(() =>
 const AllClassLabels = React.lazy(() =>
   import("./views/studygroups/classlabel/AllClassLabel")
 );
+const Karmapoint = React.lazy(() => import("./views/karmapoints/Karmapoint"));
+const KarmapointSettings = React.lazy(() =>
+  import("./views/karmapoints/KarmaPointSettings")
+);
+const KarmapointTransaction = React.lazy(() =>
+  import("./views/karmapoints/Transaction")
+);
+const UserTrackings = React.lazy(() =>
+  import("./views/usertrack/UserTrackings")
+);
+const UserTracking = React.lazy(() => import("./views/usertrack/UserTracking"));
+const SubscriptionBand = React.lazy(() =>
+  import("./views/subscriptionband/SubscriptionBand")
+);
 
 const routes = [
   { path: "/", exact: true, name: "Home" },
@@ -98,6 +112,32 @@ const routes = [
   },
   { path: "/classlabels", name: "AllClassLabels", element: AllClassLabels },
   { path: "/users", name: "AllUsers", element: AllUsers },
+  { path: "/karmapoint", name: "Karma point balance", element: Karmapoint },
+  {
+    path: "/subscriptionband",
+    name: "Subscription Band",
+    element: SubscriptionBand,
+  },
+  {
+    path: "/karmapoint-settings",
+    name: "Karma Point Settings",
+    element: KarmapointSettings,
+  },
+  {
+    path: "/usertrackings",
+    name: "Web Traffic",
+    element: UserTrackings,
+  },
+  {
+    path: "/usertrackings/:id",
+    name: "Web Traffic Activity",
+    element: UserTracking,
+  },
+  {
+    path: "/karmapoint-transaction",
+    name: "Karma Point Transaction",
+    element: KarmapointTransaction,
+  },
 
   { path: "/dashboard", name: "Dashboard", element: Dashboard },
   { path: "/theme", name: "Theme", element: Colors, exact: true },

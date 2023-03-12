@@ -11,6 +11,9 @@ export const bookclubApi = apiSlice.injectEndpoints({
     getbookclub: builder.query({
       query: (id) => `/api/bookclub/${id}`,
     }),
+    getBookclubReport: builder.query({
+      query: () => `/api/admin/getBookclubReport`,
+    }),
     createBookClub: builder.mutation({
       query: (formData) => ({
         url: "/api/bookclub",
@@ -71,4 +74,5 @@ export const {
   useCreateBookClubMutation,
   useUpdateBookClubMutation,
   useGetuserbookclubsQuery,
+  useGetBookclubReportQuery,
 } = bookclubApi;

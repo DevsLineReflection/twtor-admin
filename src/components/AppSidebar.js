@@ -1,30 +1,39 @@
-import React from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
 
-import { CSidebar, CSidebarBrand, CSidebarNav, CSidebarToggler, CSpinner } from '@coreui/react'
-import CIcon from '@coreui/icons-react'
+import {
+  CSidebar,
+  CSidebarBrand,
+  CSidebarNav,
+  CSidebarToggler,
+  CSpinner,
+} from "@coreui/react";
+import CIcon from "@coreui/icons-react";
 
-import { AppSidebarNav } from './AppSidebarNav'
+import { AppSidebarNav } from "./AppSidebarNav";
 
-import SimpleBar from 'simplebar-react'
-import 'simplebar/dist/simplebar.min.css'
-import Logo from 'src/assets/brand/logo.png'
+import SimpleBar from "simplebar-react";
+import "simplebar/dist/simplebar.min.css";
+import Logo from "src/assets/brand/logo.png";
 // sidebar nav config
-import navigation from '../_nav'
-import { changeSidebarShow, changeSidebarUnfoldable } from 'src/features/sidebar/sidebarSlice'
-import { useLogoutMutation } from 'src/features/auth/authApi'
-import { cilAccountLogout } from '@coreui/icons'
+import navigation from "../_nav";
+import {
+  changeSidebarShow,
+  changeSidebarUnfoldable,
+} from "src/features/sidebar/sidebarSlice";
+import { useLogoutMutation } from "src/features/auth/authApi";
+import { cilAccountLogout } from "@coreui/icons";
 
 const AppSidebar = () => {
-  const dispatch = useDispatch()
-  const { unfoldable } = useSelector((state) => state.sidebar)
-  const { sidebarShow } = useSelector((state) => state.sidebar)
-  const [logout, { data, isLoading, error }] = useLogoutMutation()
+  const dispatch = useDispatch();
+  const { unfoldable } = useSelector((state) => state.sidebar);
+  const { sidebarShow } = useSelector((state) => state.sidebar);
+  const [logout, { data, isLoading, error }] = useLogoutMutation();
 
   const handleLogOut = async () => {
-    await logout()
-    window.location.href = '/'
-  }
+    await logout();
+    window.location.href = "/";
+  };
 
   return (
     <CSidebar
@@ -32,7 +41,7 @@ const AppSidebar = () => {
       unfoldable={unfoldable}
       visible={sidebarShow}
       onVisibleChange={(visible) => {
-        dispatch(changeSidebarShow({ sidebarShow: visible }))
+        dispatch(changeSidebarShow({ sidebarShow: visible }));
       }}
     >
       <CSidebarBrand className="d-none d-md-flex" to="/">
@@ -42,12 +51,19 @@ const AppSidebar = () => {
         <SimpleBar>
           <AppSidebarNav items={navigation} />
         </SimpleBar>
-        <li class="nav-item">
-          <a class="nav-link" onClick={() => handleLogOut()} style={{ cursor: 'pointer' }}>
+        <li className="nav-item">
+          <a
+            className="nav-link"
+            onClick={() => handleLogOut()}
+            style={{ cursor: "pointer" }}
+          >
             <CIcon icon={cilAccountLogout} customClassName="nav-icon" />
-            <span className="mr-4">Logout</span>{' '}
+            <span className="mr-4">Logout</span>{" "}
             {isLoading && (
-              <div className="spinner-border spinner-grow-sm text-light" role="status">
+              <div
+                className="spinner-border spinner-grow-sm text-light"
+                role="status"
+              >
                 <span className="visually-hidden">Loading...</span>
               </div>
             )}
@@ -56,10 +72,12 @@ const AppSidebar = () => {
       </CSidebarNav>
       <CSidebarToggler
         className="d-none d-lg-flex"
-        onClick={() => dispatch(changeSidebarUnfoldable({ unfoldable: !unfoldable }))}
+        onClick={() =>
+          dispatch(changeSidebarUnfoldable({ unfoldable: !unfoldable }))
+        }
       />
     </CSidebar>
-  )
-}
+  );
+};
 
-export default React.memo(AppSidebar)
+export default React.memo(AppSidebar);

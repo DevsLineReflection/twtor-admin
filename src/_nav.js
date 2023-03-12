@@ -53,73 +53,9 @@ const _nav = [
         name: "Class Labels",
         to: "/classlabels",
       },
-      // {
-      //   component: CNavItem,
-      //   name: 'Breadcrumb',
-      //   to: '/base/breadcrumbs',
-      // },
-      // {
-      //   component: CNavItem,
-      //   name: 'Cards',
-      //   to: '/base/cards',
-      // },
-      // {
-      //   component: CNavItem,
-      //   name: 'Carousel',
-      //   to: '/base/carousels',
-      // },
-      // {
-      //   component: CNavItem,
-      //   name: 'Collapse',
-      //   to: '/base/collapses',
-      // },
-      // {
-      //   component: CNavItem,
-      //   name: 'List group',
-      //   to: '/base/list-groups',
-      // },
-      // {
-      //   component: CNavItem,
-      //   name: 'Navs & Tabs',
-      //   to: '/base/navs',
-      // },
-      // {
-      //   component: CNavItem,
-      //   name: 'Pagination',
-      //   to: '/base/paginations',
-      // },
-      // {
-      //   component: CNavItem,
-      //   name: 'Placeholders',
-      //   to: '/base/placeholders',
-      // },
-      // {
-      //   component: CNavItem,
-      //   name: 'Popovers',
-      //   to: '/base/popovers',
-      // },
-      // {
-      //   component: CNavItem,
-      //   name: 'Progress',
-      //   to: '/base/progress',
-      // },
-      // {
-      //   component: CNavItem,
-      //   name: 'Spinners',
-      //   to: '/base/spinners',
-      // },
-      // {
-      //   component: CNavItem,
-      //   name: 'Tables',
-      //   to: '/base/tables',
-      // },
-      // {
-      //   component: CNavItem,
-      //   name: 'Tooltips',
-      //   to: '/base/tooltips',
-      // },
     ],
   },
+
   // {
   //   component: CNavGroup,
   //   name: 'Buttons',
@@ -273,6 +209,7 @@ const _nav = [
         name: "Users",
         to: "/users",
       },
+
       // {
       //   component: CNavItem,
       //   name: 'Register',
@@ -291,8 +228,42 @@ const _nav = [
     ],
   },
   {
+    component: CNavItem,
+    name: "Web Traffic",
+    to: "/usertrackings",
+    icon: <CIcon icon={cilPuzzle} customClassName="nav-icon" />,
+  },
+  {
     component: CNavTitle,
     name: "Settings",
+  },
+  {
+    component: CNavGroup,
+    name: "Karma Point",
+    icon: <CIcon icon={cilPuzzle} customClassName="nav-icon" />,
+    items: [
+      {
+        component: CNavItem,
+        name: "Escrow Account",
+        to: "/karmapoint",
+      },
+      {
+        component: CNavItem,
+        name: "Transaction",
+        to: "/karmapoint-transaction",
+      },
+      {
+        component: CNavItem,
+        name: "Settings",
+        to: "/karmapoint-settings",
+      },
+    ],
+  },
+  {
+    component: CNavItem,
+    name: "Subscription Band",
+    to: "/subscriptionband",
+    icon: <CIcon icon={cilPuzzle} customClassName="nav-icon" />,
   },
   {
     component: CNavItem,

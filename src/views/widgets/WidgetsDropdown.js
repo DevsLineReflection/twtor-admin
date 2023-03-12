@@ -81,18 +81,18 @@ const WidgetsDropdown = () => {
   if (!bookclubLoading && bookclubReport && !bookclubData) {
     setbookclubData(bookclubReport.report);
     setDataBookclubMonth([
-      getTotalByMonth("January"),
-      getTotalByMonth("February"),
-      getTotalByMonth("March"),
-      getTotalByMonth("April"),
-      getTotalByMonth("May"),
-      getTotalByMonth("June"),
-      getTotalByMonth("July"),
-      getTotalByMonth("August"),
-      getTotalByMonth("September"),
-      getTotalByMonth("October"),
-      getTotalByMonth("November"),
-      getTotalByMonth("December"),
+      getTotalBookclubByMonth("January"),
+      getTotalBookclubByMonth("February"),
+      getTotalBookclubByMonth("March"),
+      getTotalBookclubByMonth("April"),
+      getTotalBookclubByMonth("May"),
+      getTotalBookclubByMonth("June"),
+      getTotalBookclubByMonth("July"),
+      getTotalBookclubByMonth("August"),
+      getTotalBookclubByMonth("September"),
+      getTotalBookclubByMonth("October"),
+      getTotalBookclubByMonth("November"),
+      getTotalBookclubByMonth("December"),
     ]);
   }
 

@@ -21,6 +21,7 @@ import {
 } from "src/features/bookclub/bookclubApi";
 import GetBadge from "src/lib/GetBadge";
 import { useDispatch } from "react-redux";
+import StudyGroupPrice from "src/components/StudyGroupPrice";
 
 const AllStudyGroups = () => {
   const queryPage = useLocation().search.match(/page=([0-9]+)/, "");
@@ -90,43 +91,50 @@ const AllStudyGroups = () => {
                 </>
               ) : (
                 bookclubs?.data?.map((item) => (
-                  <CTableRow>
-                    <CTableHeaderCell scope="row">{item.id}</CTableHeaderCell>
-                    <CTableDataCell>{item.name}</CTableDataCell>
-                    {/* <CTableDataCell>
+                  <>
+                    <CTableRow>
+                      <CTableHeaderCell scope="row">{item.id}</CTableHeaderCell>
+                      <CTableDataCell>{item.name}</CTableDataCell>
+                      {/* <CTableDataCell>
                       <CBadge color={GetBadge(item.is_multiple)}>
                         {item.is_multiple ? "Allowed" : "Not Allowed"}
                       </CBadge>
                     </CTableDataCell> */}
-                    <CTableDataCell>
-                      <CBadge color={GetBadge(item.public_or_private)}>
-                        {item.public_or_private ? "Private" : "Public"}
-                      </CBadge>
-                    </CTableDataCell>
-                    <CTableDataCell>
-                      <CBadge color={GetBadge(item.subscription_type)}>
-                        {item.subscription_type ? "Paid" : "Free"}
-                      </CBadge>
-                    </CTableDataCell>
-                    <CTableDataCell>
-                      <CBadge color={GetBadge(item.is_active)}>
-                        {item.is_active ? "Active" : "Inactive"}
-                      </CBadge>
-                    </CTableDataCell>
-                    <CTableDataCell>{item.owner.email}</CTableDataCell>
-                    <CTableDataCell>
-                      {item.created_at ? (
-                        <Moment format="DD-MMM-YYYY LT">
-                          {item.created_at}
-                        </Moment>
-                      ) : (
-                        ""
-                      )}
-                    </CTableDataCell>
-                    {/* <CTableDataCell>
+                      <CTableDataCell>
+                        <CBadge color={GetBadge(item.public_or_private)}>
+                          {item.public_or_private ? "Private" : "Public"}
+                        </CBadge>
+                      </CTableDataCell>
+                      <CTableDataCell>
+                        <CBadge color={GetBadge(item.subscription_type)}>
+                          {item.subscription_type ? "Paid" : "Free"}
+                        </CBadge>
+                      </CTableDataCell>
+                      <CTableDataCell>
+                        <CBadge color={GetBadge(item.is_active)}>
+                          {item.is_active ? "Active" : "Inactive"}
+                        </CBadge>
+                      </CTableDataCell>
+                      <CTableDataCell>{item.owner.email}</CTableDataCell>
+                      <CTableDataCell>
+                        {item.created_at ? (
+                          <Moment format="DD-MMM-YYYY LT">
+                            {item.created_at}
+                          </Moment>
+                        ) : (
+                          ""
+                        )}
+                      </CTableDataCell>
+                      {/* <CTableDataCell>
                     <CButton color="warning">Edit</CButton>
                   </CTableDataCell> */}
-                  </CTableRow>
+                    </CTableRow>
+                    <CTableRow>
+                      <CTableDataCell colSpan={7}>
+                        <StudyGroupPrice />
+                      </CTableDataCell>
+                    </CTableRow>
+                  </>
                 ))
               )}
             </CTableBody>

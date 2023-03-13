@@ -46,6 +46,18 @@ const UserList = () => {
       <CCard className="mb-4">
         <CCardHeader>Twtor User List</CCardHeader>
         <CCardBody>
+          <div className="row my-2 mx-0">
+            <div className="col-sm-12 form-inline p-0 c-datatable-filter">
+              {/* <label className="mfe-2">Search</label> */}
+              <input
+                className="form-control"
+                type="text"
+                placeholder="Search here ..."
+                // value={GlobalSearch}
+                // onChange={(e) => globalSearch(e.target.value)}
+              />
+            </div>
+          </div>
           <CTable striped>
             <CTableHead>
               <CTableRow>
@@ -98,9 +110,9 @@ const UserList = () => {
                         ""
                       )}
                     </CTableDataCell>
-                    {/* <CTableDataCell>
-                    <CButton color="warning">Edit</CButton>
-                  </CTableDataCell> */}
+                    <CTableDataCell>
+                      <CButton color="info">Details</CButton>
+                    </CTableDataCell>
                   </CTableRow>
                 ))
               )}

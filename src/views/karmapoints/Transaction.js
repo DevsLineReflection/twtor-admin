@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   CCard,
   CCardHeader,
@@ -20,34 +20,75 @@ import {
 } from "@coreui/react";
 
 import axios from "../../lib/axios";
+import { useGetKarmaPointHistoryQuery } from "src/features/karmapoint/karmapointApi";
+import Moment from "react-moment";
 
 function Transaction() {
+  const {
+    data: karmaPointHistory,
+    isLoading: karmaPointHistoryLoading,
+    error: karmaPointHistoryError,
+  } = useGetKarmaPointHistoryQuery();
+  const [karmapointInHistory, setkarmapointInHistory] = useState([]);
+
+  useEffect(() => {
+    if (karmaPointHistory && karmaPointHistory.length > 0) {
+      setkarmapointInHistory(karmaPointHistory);
+    }
+  }, [karmaPointHistory]);
+
   return (
     <CCard className="mb-4">
       <CCardHeader className="d-flex justify-content-between">
         Twtor Karma Points Transaction
       </CCardHeader>
       <CCardBody>
+        <div className="row my-2 mx-0">
+          <div className="col-sm-12 form-inline p-0 c-datatable-filter">
+            {/* <label className="mfe-2">Search</label> */}
+            <input
+              className="form-control"
+              type="text"
+              placeholder="Search here ..."
+              // value={GlobalSearch}
+              // onChange={(e) => globalSearch(e.target.value)}
+            />
+          </div>
+        </div>
         <CTable striped>
           <CTableHead>
             <CTableRow>
               <CTableHeaderCell scope="col">#</CTableHeaderCell>
+              <CTableHeaderCell scope="col">Transaction Id</CTableHeaderCell>
               <CTableHeaderCell scope="col">Karma Points</CTableHeaderCell>
               <CTableHeaderCell scope="col">Type</CTableHeaderCell>
-              <CTableHeaderCell scope="col">By</CTableHeaderCell>
+              {/* <CTableHeaderCell scope="col">By</CTableHeaderCell> */}
               <CTableHeaderCell scope="col">At</CTableHeaderCell>
               {/* <CTableHeaderCell scope="col">Action</CTableHeaderCell> */}
             </CTableRow>
           </CTableHead>
           <CTableBody>
-            {/* {language?.map((item) => (
-          <CTableRow>
-            <CTableHeaderCell scope="row">{item.id}</CTableHeaderCell>
-            <CTableDataCell>{item.short_name}</CTableDataCell>
-            <CTableDataCell>{item.languages}</CTableDataCell>
-         
-          </CTableRow>
-        ))} */}
+            {karmapointInHistory?.map((item) => (
+              <CTableRow>
+                <CTableHeaderCell scope="row">{item.id}</CTableHeaderCell>
+                <CTableHeaderCell scope="row">
+                  {item.transaction_id}
+                </CTableHeaderCell>
+                <CTableDataCell>
+                  {item.point_in > 0 ? item.point_in : item.point_out}
+                </CTableDataCell>
+                <CTableDataCell>
+                  {item.point_in > 0 ? "In" : "Out"}
+                </CTableDataCell>
+                <CTableDataCell>
+                  {item.created_at ? (
+                    <Moment format="DD-MMM-YYYY LT">{item.created_at}</Moment>
+                  ) : (
+                    ""
+                  )}
+                </CTableDataCell>
+              </CTableRow>
+            ))}
           </CTableBody>
         </CTable>
       </CCardBody>

@@ -78,6 +78,7 @@ const AllStudyGroups = () => {
                 <CTableHeaderCell scope="col">Active</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Created By</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Created On</CTableHeaderCell>
+                <CTableHeaderCell scope="col">Action</CTableHeaderCell>
               </CTableRow>
             </CTableHead>
             <CTableBody>
@@ -125,9 +126,9 @@ const AllStudyGroups = () => {
                           ""
                         )}
                       </CTableDataCell>
-                      {/* <CTableDataCell>
-                    <CButton color="warning">Edit</CButton>
-                  </CTableDataCell> */}
+                      <CTableDataCell>
+                        <CButton color="primary">Details</CButton>
+                      </CTableDataCell>
                     </CTableRow>
                     <CTableRow>
                       <CTableDataCell colSpan={7}>

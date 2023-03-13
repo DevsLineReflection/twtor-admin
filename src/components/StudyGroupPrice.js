@@ -3,7 +3,7 @@ import React from "react";
 
 function StudyGroupPrice() {
   return (
-    <table className="table table-striped table-hover table-responsive">
+    <table className="table table-striped table-hover table-responsive text-right">
       <thead>
         <tr>
           <th width="15%">Band</th>

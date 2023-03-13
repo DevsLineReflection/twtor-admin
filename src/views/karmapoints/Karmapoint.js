@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   CCard,
   CCardHeader,
@@ -20,10 +20,38 @@ import {
 } from "@coreui/react";
 
 import axios from "../../lib/axios";
+import {
+  useCreateInKarmaPointsMutation,
+  useGetKarmaPointHistoryQuery,
+} from "src/features/karmapoint/karmapointApi";
+import Moment from "react-moment";
 function Karmapoint() {
+  const {
+    data: karmaPointHistory,
+    isLoading: karmaPointHistoryLoading,
+    error: karmaPointHistoryError,
+  } = useGetKarmaPointHistoryQuery();
+
+  const [createInKarmaPoints, { data, isLoading, error }] =
+    useCreateInKarmaPointsMutation();
+
   const [karmaPoints, setAddKarmaPoints] = useState(false);
+  const [amount, setAmount] = useState("");
+  const [karmapointInHistory, setkarmapointInHistory] = useState([]);
+
+  useEffect(() => {
+    if (karmaPointHistory && karmaPointHistory.length > 0) {
+      let balance_in = karmaPointHistory.filter((item) => item.point_in > 0);
+      setkarmapointInHistory(balance_in);
+    }
+  }, [karmaPointHistory]);
+
   const submitForm = async (event) => {
     event.preventDefault();
+    createInKarmaPoints({ amount: amount }).then((res) => {
+      setAddKarmaPoints(false);
+      setAmount("");
+    });
   };
 
   return (
@@ -51,9 +79,8 @@ function Karmapoint() {
                       type="number"
                       placeholder="Karma Point"
                       min="1"
-                      //   defaultValue={ShortName}
-                      //   //   value={email}
-                      //   onChange={(e) => handleshortNameChange(e.target.value)}
+                      value={amount}
+                      onChange={(e) => setAmount(e.target.value)}
                       required
                     />{" "}
                   </CInputGroup>
@@ -74,14 +101,14 @@ function Karmapoint() {
                         // disabled={ShortNameError}
                       >
                         Add{" "}
-                        {/* {isLoading && (
+                        {isLoading && (
                           <div
                             className="spinner-border spinner-grow-sm text-light "
                             role="status"
                           >
                             <span className="visually-hidden">Loading...</span>
                           </div>
-                        )} */}
+                        )}
                       </CButton>
                     </CCol>
                   </CRow>
@@ -107,25 +134,46 @@ function Karmapoint() {
           )}
         </CCardHeader>
         <CCardBody>
+          <div className="row my-2 mx-0">
+            <div className="col-sm-12 form-inline p-0 c-datatable-filter">
+              {/* <label className="mfe-2">Search</label> */}
+              <input
+                className="form-control"
+                type="text"
+                placeholder="Search here ..."
+                // value={GlobalSearch}
+                // onChange={(e) => globalSearch(e.target.value)}
+              />
+            </div>
+          </div>
           <CTable striped>
             <CTableHead>
               <CTableRow>
                 <CTableHeaderCell scope="col">#</CTableHeaderCell>
+                <CTableHeaderCell scope="col">Transaction Id</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Karma Points</CTableHeaderCell>
-                <CTableHeaderCell scope="col">By</CTableHeaderCell>
+                {/* <CTableHeaderCell scope="col">By</CTableHeaderCell> */}
                 <CTableHeaderCell scope="col">At</CTableHeaderCell>
                 {/* <CTableHeaderCell scope="col">Action</CTableHeaderCell> */}
               </CTableRow>
             </CTableHead>
             <CTableBody>
-              {/* {language?.map((item) => (
+              {karmapointInHistory?.map((item) => (
                 <CTableRow>
                   <CTableHeaderCell scope="row">{item.id}</CTableHeaderCell>
-                  <CTableDataCell>{item.short_name}</CTableDataCell>
-                  <CTableDataCell>{item.languages}</CTableDataCell>
-               
+                  <CTableHeaderCell scope="row">
+                    {item.transaction_id}
+                  </CTableHeaderCell>
+                  <CTableDataCell>{item.point_in}</CTableDataCell>
+                  <CTableDataCell>
+                    {item.created_at ? (
+                      <Moment format="DD-MMM-YYYY LT">{item.created_at}</Moment>
+                    ) : (
+                      ""
+                    )}
+                  </CTableDataCell>
                 </CTableRow>
-              ))} */}
+              ))}
             </CTableBody>
           </CTable>
         </CCardBody>

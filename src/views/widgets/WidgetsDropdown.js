@@ -532,7 +532,7 @@ const WidgetsDropdown = () => {
               </span> */}
               </>
             }
-            title="Karma Points Escrow Balance"
+            title="Total Income"
             // action={
             //   <CDropdown alignment="end">
             //     <CDropdownToggle

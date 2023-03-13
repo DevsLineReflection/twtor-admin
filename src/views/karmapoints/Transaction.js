@@ -74,11 +74,11 @@ function Transaction() {
                 <CTableHeaderCell scope="row">
                   {item.transaction_id}
                 </CTableHeaderCell>
-                <CTableDataCell>
-                  {item.point_in > 0 ? item.point_in : item.point_out}
+                <CTableDataCell className={`${item.user_id != 1 && 'text-danger'}`}>
+                  {item.point_in}
                 </CTableDataCell>
-                <CTableDataCell>
-                  {item.point_in > 0 ? "In" : "Out"}
+                <CTableDataCell className={`${item.user_id != 1 && 'text-danger'}`}>
+                  {item.user_id == 1 ? "In" : "Out"}
                 </CTableDataCell>
                 <CTableDataCell>
                   {item.created_at ? (

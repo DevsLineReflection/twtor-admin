@@ -41,7 +41,7 @@ function Karmapoint() {
 
   useEffect(() => {
     if (karmaPointHistory && karmaPointHistory.length > 0) {
-      let balance_in = karmaPointHistory.filter((item) => item.point_in > 0);
+      let balance_in = karmaPointHistory.filter((item) => item.user_id == 1);
       setkarmapointInHistory(balance_in);
     }
   }, [karmaPointHistory]);

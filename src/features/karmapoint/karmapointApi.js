@@ -3,11 +3,11 @@ import { apiSlice } from "../api/apiSlice";
 export const karmapointApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getKarmaPointHistory: builder.query({
-      query: () => `/api/admin/getKarmaPointsTransactionHistory`,
+      query: () => `/api/admin/getKarmaPointsTransactionHistoryAdmin`,
       providesTags: ["KarmaPointHistory"],
     }),
     getKarmapointsBalance: builder.query({
-      query: () => `/api/admin/getTotalKarmaPoints`,
+      query: () => `/api/admin/getTotalKarmaPointsAdmin`,
       providesTags: ["KarmaPointAccount"],
     }),
     createInKarmaPoints: builder.mutation({

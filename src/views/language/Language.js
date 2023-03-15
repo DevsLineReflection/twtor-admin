@@ -18,11 +18,19 @@ import {
   CInputGroupText,
   CFormInput,
 } from "@coreui/react";
-import { useGetLanguageQuery } from "src/features/language/languageApi";
+import {
+  useCreateLanguageMutation,
+  useGetLanguageQuery,
+} from "src/features/language/languageApi";
 import axios from "../../lib/axios";
 
 const Language = () => {
   const { data: language, isLoading, error } = useGetLanguageQuery();
+  const [
+    createLanguage,
+    { data, isLoading: createLanguageLoading, error: createError },
+  ] = useCreateLanguageMutation();
+
   const [addLanguage, setAddLanguage] = useState(false);
   const [ShortName, setShortName] = useState("");
   const [LanguageName, setLanguageName] = useState("");
@@ -30,6 +38,10 @@ const Language = () => {
 
   const submitForm = async (event) => {
     event.preventDefault();
+    createLanguage({
+      languages: LanguageName,
+      short_name: ShortName,
+    }).then((res) => setAddLanguage(false));
   };
 
   const shortNameChange = async (val) => {
@@ -56,10 +68,7 @@ const Language = () => {
     };
   };
 
-  const handleshortNameChange = debounce(
-    (value) => shortNameChange(value),
-    150
-  );
+  const handleshortNameChange = debounce((value) => shortNameChange(value), 0);
 
   return (
     <>
@@ -114,10 +123,10 @@ const Language = () => {
                         color="primary"
                         className="px-4"
                         type="submit"
-                        disabled={ShortNameError}
+                        disabled={ShortNameError || createLanguageLoading}
                       >
                         Add{" "}
-                        {isLoading && (
+                        {createLanguageLoading && (
                           <div
                             className="spinner-border spinner-grow-sm text-light "
                             role="status"
@@ -160,16 +169,20 @@ const Language = () => {
               </CTableRow>
             </CTableHead>
             <CTableBody>
-              {language?.map((item) => (
-                <CTableRow>
-                  <CTableHeaderCell scope="row">{item.id}</CTableHeaderCell>
-                  <CTableDataCell>{item.short_name}</CTableDataCell>
-                  <CTableDataCell>{item.languages}</CTableDataCell>
-                  {/* <CTableDataCell>
+              {isLoading ? (
+                <div className="text-center">Loading...</div>
+              ) : (
+                language?.map((item) => (
+                  <CTableRow>
+                    <CTableHeaderCell scope="row">{item.id}</CTableHeaderCell>
+                    <CTableDataCell>{item.short_name}</CTableDataCell>
+                    <CTableDataCell>{item.languages}</CTableDataCell>
+                    {/* <CTableDataCell>
                     <CButton color="warning">Edit</CButton>
                   </CTableDataCell> */}
-                </CTableRow>
-              ))}
+                  </CTableRow>
+                ))
+              )}
             </CTableBody>
           </CTable>
         </CCardBody>

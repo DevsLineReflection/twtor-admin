@@ -5,7 +5,33 @@ export const languageApi = apiSlice.injectEndpoints({
     getLanguage: builder.query({
       query: () => `/api/admin/language`,
     }),
+    createLanguage: builder.mutation({
+      query: (data) => ({
+        url: "/api/admin/language",
+        method: "POST",
+        body: data,
+      }),
+      async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+        try {
+          const result = await queryFulfilled;
+          if (result.data) {
+            debugger;
+            dispatch(
+              apiSlice.util.updateQueryData(
+                "getLanguage",
+                undefined,
+                (draft) => {
+                  draft.push(result.data);
+                }
+              )
+            );
+          }
+        } catch (err) {
+          // do nothing
+        }
+      },
+    }),
   }),
 });
 
-export const { useGetLanguageQuery } = languageApi;
+export const { useGetLanguageQuery, useCreateLanguageMutation } = languageApi;

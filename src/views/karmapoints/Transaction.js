@@ -74,11 +74,15 @@ function Transaction() {
                 <CTableHeaderCell scope="row">
                   {item.transaction_id}
                 </CTableHeaderCell>
-                <CTableDataCell className={`${item.user_id != 1 && 'text-danger'}`}>
+                <CTableDataCell
+                  className={`${item.Type != "admin" && "text-danger"}`}
+                >
                   {item.point_in}
                 </CTableDataCell>
-                <CTableDataCell className={`${item.user_id != 1 && 'text-danger'}`}>
-                  {item.user_id == 1 ? "In" : "Out"}
+                <CTableDataCell
+                  className={`${item.Type != "admin" && "text-danger"}`}
+                >
+                  {item.Type == "admin" ? "In" : "Out"}
                 </CTableDataCell>
                 <CTableDataCell>
                   {item.created_at ? (

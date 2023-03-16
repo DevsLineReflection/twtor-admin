@@ -36,6 +36,8 @@ const AllStudyGroups = () => {
   } = useGetbookclubsQuery(page);
   const dispatch = useDispatch();
 
+  const [SubscriptionStudyGroupId, setSubscriptionStudyGroupId] = useState("");
+
   useEffect(() => {
     if (page > 1) {
       dispatch(bookclubApi.endpoints.getbookclubs.initiate(page));
@@ -128,11 +130,32 @@ const AllStudyGroups = () => {
                       </CTableDataCell>
                       <CTableDataCell>
                         <CButton color="primary">Details</CButton>
+                        <div className="d-flex my-2">
+                          {SubscriptionStudyGroupId == item.id ? (
+                            <CButton
+                              color="warning"
+                              onClick={() => setSubscriptionStudyGroupId("")}
+                            >
+                              Hide
+                            </CButton>
+                          ) : (
+                            <CButton
+                              color="success"
+                              onClick={() =>
+                                setSubscriptionStudyGroupId(item.id)
+                              }
+                            >
+                              Add Subscription
+                            </CButton>
+                          )}
+                        </div>
                       </CTableDataCell>
                     </CTableRow>
                     <CTableRow>
-                      <CTableDataCell colSpan={7}>
-                        <StudyGroupPrice />
+                      <CTableDataCell colSpan={8}>
+                        {SubscriptionStudyGroupId == item.id && (
+                          <StudyGroupPrice />
+                        )}
                       </CTableDataCell>
                     </CTableRow>
                   </>

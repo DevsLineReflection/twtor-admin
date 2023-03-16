@@ -19,11 +19,22 @@ import {
   CFormInput,
 } from "@coreui/react";
 
-import { useGetcountryQuery } from "src/features/country/countryApi";
+import {
+  useCreateCountryMutation,
+  useGetcountryQuery,
+} from "src/features/country/countryApi";
 
 const Country = () => {
   const { data: country, isLoading, error } = useGetcountryQuery();
   const [addCountry, setAddCountry] = useState(false);
+
+  const [
+    createCountry,
+    { data, isLoading: createCountryLoading, error: createError },
+  ] = useCreateCountryMutation();
+
+  const [ShortName, setShortName] = useState("");
+  const [CountryName, setCountryName] = useState("");
 
   const toggleAddCountry = () => {
     setAddCountry((prev) => !prev);
@@ -31,6 +42,14 @@ const Country = () => {
 
   const submitForm = async (event) => {
     event.preventDefault();
+    createCountry({
+      name: CountryName,
+      short_name: ShortName,
+    }).then((res) => {
+      setAddCountry(false);
+      setShortName("");
+      setCountryName("");
+    });
   };
 
   return (
@@ -46,8 +65,8 @@ const Country = () => {
                     <CFormInput
                       type="text"
                       placeholder="Short Name"
-                      //   value={email}
-                      //   onChange={(e) => setEmail(e.target.value)}
+                      value={ShortName}
+                      onChange={(e) => setShortName(e.target.value)}
                       required
                     />
                   </CInputGroup>
@@ -55,8 +74,8 @@ const Country = () => {
                     <CFormInput
                       type="text"
                       placeholder="Country Name"
-                      //   value={password}
-                      //   onChange={(e) => setPassword(e.target.value)}
+                      value={CountryName}
+                      onChange={(e) => setCountryName(e.target.value)}
                       required
                     />
                   </CInputGroup>
@@ -67,9 +86,14 @@ const Country = () => {
                   )}
                   <CRow>
                     <CCol xs={6}>
-                      <CButton color="primary" className="px-4" type="submit">
+                      <CButton
+                        color="primary"
+                        className="px-4"
+                        type="submit"
+                        disabled={createCountryLoading}
+                      >
                         Add{" "}
-                        {isLoading && (
+                        {createCountryLoading && (
                           <div
                             className="spinner-border spinner-grow-sm text-light "
                             role="status"

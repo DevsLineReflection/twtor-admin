@@ -21,15 +21,44 @@ import {
 } from "@coreui/react";
 
 import axios from "../../lib/axios";
+import {
+  useCreateSubscriptionbandMutation,
+  useGetSubscriptionbandQuery,
+} from "src/features/subscriptionband/subscriptionbandApi";
+import Moment from "react-moment";
 function SubscriptionBand() {
-  const [karmaPoints, setAddKarmaPoints] = useState(false);
+  const [subscriptionBand, setAddsubscriptionBand] = useState(false);
+  const [Band_Name, setBand_Name] = useState("");
+  const [Band_Type, setBand_Type] = useState("");
+  const [Band_Range, setBand_Range] = useState("");
+
+  const {
+    data: Subscriptionband,
+    isLoading,
+    error,
+  } = useGetSubscriptionbandQuery();
+  const [
+    createSubscriptionband,
+    { data, isLoading: createSubscriptionbandLoading, error: createError },
+  ] = useCreateSubscriptionbandMutation();
+
   const submitForm = async (event) => {
     event.preventDefault();
+    createSubscriptionband({
+      band_name: Band_Name,
+      band_type: Band_Type,
+      band_range: Band_Range,
+    }).then((res) => {
+      setAddsubscriptionBand(false);
+      setBand_Name("");
+      setBand_Type("");
+      setBand_Range("");
+    });
   };
 
   return (
     <>
-      {karmaPoints && (
+      {subscriptionBand && (
         <CCard className="mb-4">
           <CCardHeader className="d-flex justify-content-between">
             Add Subscription Band
@@ -37,7 +66,7 @@ function SubscriptionBand() {
               <CButton
                 className=""
                 color="warning"
-                onClick={() => setAddKarmaPoints(false)}
+                onClick={() => setAddsubscriptionBand(false)}
               >
                 Close
               </CButton>
@@ -53,56 +82,49 @@ function SubscriptionBand() {
                       placeholder="Band Name"
                       min="1"
                       //   defaultValue={ShortName}
-                      //   //   value={email}
-                      //   onChange={(e) => handleshortNameChange(e.target.value)}
+                      value={Band_Name}
+                      onChange={(e) => setBand_Name(e.target.value)}
                       required
                     />{" "}
                   </CInputGroup>
                   <CFormSelect
                     className="mb-3"
                     aria-label="Default select example"
+                    value={Band_Type}
+                    onChange={(e) => setBand_Type(e.target.value)}
                   >
                     <option>Select Type</option>
-                    <option value="0">Days</option>
-                    <option value="1">Monthly</option>
-                    <option value="2">Yearly</option>
+                    <option value="Days">Days</option>
+                    <option value="Monthly">Monthly</option>
+                    <option value="Yearly">Yearly</option>
                   </CFormSelect>
                   <CInputGroup className="mb-3">
                     <CFormInput
                       type="number"
                       placeholder="Band Range"
                       min="1"
-                      //   defaultValue={ShortName}
-                      //   //   value={email}
-                      //   onChange={(e) => handleshortNameChange(e.target.value)}
+                      value={Band_Range}
+                      onChange={(e) => setBand_Range(e.target.value)}
                       required
                     />{" "}
                   </CInputGroup>
-                  {/* {ShortNameError && (
-                    <span className="text-danger">{ShortNameError}</span>
-                  )} */}
-                  {/* {error && (
-                    <div className="mb-2 text-danger">
-                      {error?.data?.message}
-                    </div>
-                  )} */}
                   <CRow>
                     <CCol xs={6}>
                       <CButton
                         color="primary"
                         className="px-4"
                         type="submit"
-                        // disabled={ShortNameError}
+                        disabled={createSubscriptionbandLoading}
                       >
                         Add{" "}
-                        {/* {isLoading && (
+                        {createSubscriptionbandLoading && (
                           <div
                             className="spinner-border spinner-grow-sm text-light "
                             role="status"
                           >
                             <span className="visually-hidden">Loading...</span>
                           </div>
-                        )} */}
+                        )}
                       </CButton>
                     </CCol>
                   </CRow>
@@ -115,12 +137,12 @@ function SubscriptionBand() {
       <CCard className="mb-4">
         <CCardHeader className="d-flex justify-content-between">
           Twtor Subscription Band
-          {!karmaPoints && (
+          {!subscriptionBand && (
             <div className="d-flex justify-content-end">
               <CButton
                 className=""
                 color="info"
-                onClick={() => setAddKarmaPoints(true)}
+                onClick={() => setAddsubscriptionBand(true)}
               >
                 Add Subscription Band
               </CButton>
@@ -135,16 +157,38 @@ function SubscriptionBand() {
                 <CTableHeaderCell scope="col">Name</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Type</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Range</CTableHeaderCell>
+                <CTableHeaderCell scope="col">Created At</CTableHeaderCell>
                 {/* <CTableHeaderCell scope="col">Action</CTableHeaderCell> */}
               </CTableRow>
             </CTableHead>
             <CTableBody>
-              <CTableRow>
-                <CTableHeaderCell scope="row">1</CTableHeaderCell>
-                <CTableDataCell>Begineer</CTableDataCell>
-                <CTableDataCell>Monthly</CTableDataCell>
-                <CTableDataCell>1</CTableDataCell>
-              </CTableRow>
+              {isLoading ? (
+                <>
+                  <CTableRow>
+                    <CTableDataCell className="text-center" colSpan={5}>
+                      Loading...
+                    </CTableDataCell>
+                  </CTableRow>
+                </>
+              ) : (
+                Subscriptionband?.map((item) => (
+                  <CTableRow>
+                    <CTableHeaderCell scope="row">{item.id}</CTableHeaderCell>
+                    <CTableDataCell>{item.band_name}</CTableDataCell>
+                    <CTableDataCell>{item.band_type}</CTableDataCell>
+                    <CTableDataCell>{item.band_range}</CTableDataCell>
+                    <CTableDataCell>
+                      {item.created_at ? (
+                        <Moment format="DD-MMM-YYYY LT">
+                          {item.created_at}
+                        </Moment>
+                      ) : (
+                        "N/A"
+                      )}
+                    </CTableDataCell>
+                  </CTableRow>
+                ))
+              )}
               {/* {language?.map((item) => (
                 <CTableRow>
                   <CTableHeaderCell scope="row">{item.id}</CTableHeaderCell>

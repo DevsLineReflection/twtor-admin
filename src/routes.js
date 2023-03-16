@@ -97,6 +97,9 @@ const UserTrackings = React.lazy(() =>
   import("./views/usertrack/UserTrackings")
 );
 const UserTracking = React.lazy(() => import("./views/usertrack/UserTracking"));
+const StudyGroupSubjects = React.lazy(() =>
+  import("./views/studygroups/studygroupsubjects/Studygroupsubjects")
+);
 const SubscriptionBand = React.lazy(() =>
   import("./views/subscriptionband/SubscriptionBand")
 );
@@ -110,7 +113,12 @@ const routes = [
     name: "All Study Groups",
     element: AllStudyGroups,
   },
-  { path: "/classlabels", name: "AllClassLabels", element: AllClassLabels },
+  { path: "/classlabels", name: "All Class Labels", element: AllClassLabels },
+  {
+    path: "/studygroupsubject",
+    name: "Study Group Subjects",
+    element: StudyGroupSubjects,
+  },
   { path: "/users", name: "AllUsers", element: AllUsers },
   { path: "/karmapoint", name: "Karma point balance", element: Karmapoint },
   {

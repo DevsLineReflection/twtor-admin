@@ -50,6 +50,11 @@ const _nav = [
       },
       {
         component: CNavItem,
+        name: "Study Group Subjects",
+        to: "/studygroupsubject",
+      },
+      {
+        component: CNavItem,
         name: "Class Labels",
         to: "/classlabels",
       },

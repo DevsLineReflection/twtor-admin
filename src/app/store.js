@@ -12,6 +12,7 @@ import solutionSliceReducer from "../features/solution/solutionSlice";
 import sidebarSliceReducer from "../features/sidebar/sidebarSlice";
 import languageSliceReducer from "../features/language/languageSlice";
 import countrySliceReducer from "../features/country/countrySlice";
+import subscriptionbandSliceReducer from "../features/subscriptionband/subscriptionbandSlice";
 
 export const store = configureStore({
   reducer: {
@@ -27,6 +28,7 @@ export const store = configureStore({
     sidebar: sidebarSliceReducer,
     language: languageSliceReducer,
     country: countrySliceReducer,
+    subscriptionband: subscriptionbandSliceReducer,
   },
   devTools: process.env.REACT_PUBLIC_ENV !== "production",
   middleware: (getDefaultMiddlewares) =>

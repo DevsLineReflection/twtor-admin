@@ -19,89 +19,85 @@ import {
   CFormInput,
   CFormSelect,
 } from "@coreui/react";
-import {
-  useCreateGradeMutation,
-  useGetgradeQuery,
-} from "src/features/grade/gradeApi";
+
 import Moment from "react-moment";
-import { useGetcountryQuery } from "src/features/country/countryApi";
+import {
+  useCreateBookClubSubjectsMutation,
+  useGetBookClubSubjectsQuery,
+} from "src/features/bookclubsubject/bookclubsubjectApi";
+import axios from "src/lib/axios";
 
-const AllClassLabel = () => {
-  const { data: classlabel, isLoading, error } = useGetgradeQuery();
-  const [
-    createGrade,
-    { data, isLoading: createGradeLoading, error: createError },
-  ] = useCreateGradeMutation();
+const Studygroupsubjects = () => {
   const {
-    data: country,
-    isLoading: isCountryLoading,
-    error: countryError,
-  } = useGetcountryQuery();
-  const [addClassLabel, setAddClassLabel] = useState(false);
-  const [Name, setName] = useState("");
-  const [Country_id, setCountry_id] = useState("");
+    data: bookclubsubjects,
+    isLoading,
+    error,
+  } = useGetBookClubSubjectsQuery();
+  const [
+    createBookClubSubject,
+    { data, isLoading: createBookClubSubjectLoading, error: createError },
+  ] = useCreateBookClubSubjectsMutation();
 
-  const toggleAddClassLabel = () => {
-    setAddClassLabel((prev) => !prev);
+  const [addBookClubSunject, setAddBookClubSunject] = useState(false);
+  const [Name, setName] = useState("");
+  const [NameError, setNameError] = useState("");
+  const toggleAddBookClubSunject = () => {
+    setAddBookClubSunject((prev) => !prev);
+  };
+
+  const subjectChange = async (val) => {
+    setName(val);
+    axios.get(`/api/admin/check_study_group_subject/${val}`).then((res) => {
+      debugger;
+      if (!(res.data === 0)) {
+        setNameError("Already Exists");
+      } else {
+        setNameError("");
+      }
+    });
   };
 
   const submitForm = async (event) => {
     event.preventDefault();
-    createGrade({
+    createBookClubSubject({
       name: Name,
-      country_id: Country_id,
     }).then((res) => {
-      setAddClassLabel(false);
+      setAddBookClubSunject(false);
       setName("");
-      setCountry_id("");
     });
   };
 
   return (
     <>
-      {addClassLabel && (
+      {addBookClubSunject && (
         <CCard className="mb-4">
-          <CCardHeader>Add Class Label</CCardHeader>
+          <CCardHeader>Add Study Group Sunjects</CCardHeader>
           <CCardBody className="justify-content-center">
             <CRow className="justify-content-center">
               <CCol md={5}>
                 <CForm onSubmit={submitForm}>
-                  <CInputGroup className="mb-3">
+                  <CInputGroup className="mb-2">
                     <CFormInput
                       type="text"
                       placeholder="Name"
                       value={Name}
-                      onChange={(e) => setName(e.target.value)}
+                      onChange={(e) => subjectChange(e.target.value)}
                       required
                     />
                   </CInputGroup>
-                  <CFormSelect
-                    className="mb-2"
-                    aria-label="Default select example"
-                    value={Country_id}
-                    onChange={(e) => setCountry_id(e.target.value)}
-                    required
-                  >
-                    <option>Select Country</option>
-                    {country?.map((item) => (
-                      <option value={item.id}>{item.name}</option>
-                    ))}
-                  </CFormSelect>
-                  {error && (
-                    <div className="mb-2 text-danger">
-                      {error?.data?.message}
-                    </div>
+                  {NameError && (
+                    <span className="text-danger">{NameError}</span>
                   )}
-                  <CRow>
+                  <CRow className="mt-1">
                     <CCol xs={6}>
                       <CButton
                         color="primary"
                         className="px-4"
                         type="submit"
-                        disabled={createGradeLoading}
+                        disabled={createBookClubSubjectLoading || NameError}
                       >
                         Add{" "}
-                        {createGradeLoading && (
+                        {createBookClubSubjectLoading && (
                           <div
                             className="spinner-border spinner-grow-sm text-light "
                             role="status"
@@ -120,10 +116,14 @@ const AllClassLabel = () => {
       )}
       <CCard className="mb-4">
         <CCardHeader className="d-flex justify-content-between">
-          Twtor Class Labels
+          Twtor Study Group Sunjects
           <div className="d-flex justify-content-end">
-            <CButton className="" color="primary" onClick={toggleAddClassLabel}>
-              Add Class Label
+            <CButton
+              className=""
+              color="primary"
+              onClick={toggleAddBookClubSunject}
+            >
+              Add Study Group Sunjects
             </CButton>
           </div>
         </CCardHeader>
@@ -133,7 +133,6 @@ const AllClassLabel = () => {
               <CTableRow>
                 <CTableHeaderCell scope="col">#</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Name</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Country</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Created On</CTableHeaderCell>
               </CTableRow>
             </CTableHead>
@@ -147,11 +146,10 @@ const AllClassLabel = () => {
                   </CTableRow>
                 </>
               ) : (
-                classlabel?.map((item) => (
+                bookclubsubjects?.map((item) => (
                   <CTableRow>
                     <CTableHeaderCell scope="row">{item.id}</CTableHeaderCell>
                     <CTableDataCell>{item.name}</CTableDataCell>
-                    <CTableDataCell>{item.country.name}</CTableDataCell>
                     <CTableDataCell>
                       {item.created_at ? (
                         <Moment format="DD-MMM-YYYY LT">
@@ -175,4 +173,4 @@ const AllClassLabel = () => {
   );
 };
 
-export default AllClassLabel;
+export default Studygroupsubjects;

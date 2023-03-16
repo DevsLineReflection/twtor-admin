@@ -1,13 +1,13 @@
 import { apiSlice } from "../api/apiSlice";
 
-export const countryApi = apiSlice.injectEndpoints({
+export const subscriptionbandApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getcountry: builder.query({
-      query: () => `/api/admin/country`,
+    getSubscriptionband: builder.query({
+      query: () => `/api/admin/subscriptionband`,
     }),
-    createCountry: builder.mutation({
+    createSubscriptionband: builder.mutation({
       query: (data) => ({
-        url: "/api/admin/country",
+        url: "/api/admin/subscriptionband",
         method: "POST",
         body: data,
       }),
@@ -18,7 +18,7 @@ export const countryApi = apiSlice.injectEndpoints({
             debugger;
             dispatch(
               apiSlice.util.updateQueryData(
-                "getcountry",
+                "getSubscriptionband",
                 undefined,
                 (draft) => {
                   draft.push(result.data);
@@ -34,4 +34,7 @@ export const countryApi = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useGetcountryQuery, useCreateCountryMutation } = countryApi;
+export const {
+  useGetSubscriptionbandQuery,
+  useCreateSubscriptionbandMutation,
+} = subscriptionbandApi;

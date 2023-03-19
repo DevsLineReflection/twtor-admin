@@ -6,10 +6,13 @@ export const bookclubApi = apiSlice.injectEndpoints({
       query: (page = 1) => `/api/admin/bookclub?page=${page}`,
     }),
     getuserbookclubs: builder.query({
-      query: () => `/api/user_bookclub`,
+      query: (id) => `/api/admin/bookclub_user/${id}`,
+    }),
+    getmemberbookclubs: builder.query({
+      query: (id) => `/api/admin/user_bookclubs/${id}`,
     }),
     getbookclub: builder.query({
-      query: (id) => `/api/bookclub/${id}`,
+      query: (id) => `/api/admin/bookclub/${id}`,
     }),
     getBookclubReport: builder.query({
       query: () => `/api/admin/getBookclubReport`,
@@ -74,5 +77,6 @@ export const {
   useCreateBookClubMutation,
   useUpdateBookClubMutation,
   useGetuserbookclubsQuery,
+  useGetmemberbookclubsQuery,
   useGetBookclubReportQuery,
 } = bookclubApi;

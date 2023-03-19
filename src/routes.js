@@ -80,6 +80,9 @@ const Country = React.lazy(() => import("./views/country/Country"));
 const AllStudyGroups = React.lazy(() =>
   import("./views/studygroups/allstudygroups/AllStudyGroups")
 );
+const SingleStudyGroup = React.lazy(() =>
+  import("./views/studygroups/studygroup/Studygroup")
+);
 const AllUsers = React.lazy(() =>
   import("./views/usermanagement/alluser/UserList")
 );
@@ -97,6 +100,7 @@ const UserTrackings = React.lazy(() =>
   import("./views/usertrack/UserTrackings")
 );
 const UserTracking = React.lazy(() => import("./views/usertrack/UserTracking"));
+const SingleUser = React.lazy(() => import("./views/usermanagement/user/User"));
 const StudyGroupSubjects = React.lazy(() =>
   import("./views/studygroups/studygroupsubjects/Studygroupsubjects")
 );
@@ -113,13 +117,19 @@ const routes = [
     name: "All Study Groups",
     element: AllStudyGroups,
   },
+  {
+    path: "/allstudygroups/:id",
+    name: "All Study Groups",
+    element: SingleStudyGroup,
+  },
   { path: "/classlabels", name: "All Class Labels", element: AllClassLabels },
   {
     path: "/studygroupsubject",
     name: "Study Group Subjects",
     element: StudyGroupSubjects,
   },
-  { path: "/users", name: "AllUsers", element: AllUsers },
+  { path: "/users", name: "All Users", element: AllUsers },
+  { path: "/users/:id", name: "User Information", element: SingleUser },
   { path: "/karmapoint", name: "Karma point balance", element: Karmapoint },
   {
     path: "/subscriptionband",

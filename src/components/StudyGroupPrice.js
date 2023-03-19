@@ -129,7 +129,7 @@ function StudyGroupPrice() {
             ))}
             <tr>
               <td colspan={8} className="text-center">
-                <CButton type="submit" color="primary">
+                <CButton type="submit" color="info">
                   Save
                 </CButton>
               </td>

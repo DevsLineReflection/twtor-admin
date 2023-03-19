@@ -15,7 +15,6 @@ export const bookclubsubjectApi = apiSlice.injectEndpoints({
         try {
           const result = await queryFulfilled;
           if (result.data) {
-            debugger;
             dispatch(
               apiSlice.util.updateQueryData(
                 "getBookClubSubjects",

@@ -15,7 +15,6 @@ export const subscriptionbandApi = apiSlice.injectEndpoints({
         try {
           const result = await queryFulfilled;
           if (result.data) {
-            debugger;
             dispatch(
               apiSlice.util.updateQueryData(
                 "getSubscriptionband",

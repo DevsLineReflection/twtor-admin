@@ -48,7 +48,6 @@ const Studygroupsubjects = () => {
   const subjectChange = async (val) => {
     setName(val);
     axios.get(`/api/admin/check_study_group_subject/${val}`).then((res) => {
-      debugger;
       if (!(res.data === 0)) {
         setNameError("Already Exists");
       } else {
@@ -91,7 +90,7 @@ const Studygroupsubjects = () => {
                   <CRow className="mt-1">
                     <CCol xs={6}>
                       <CButton
-                        color="primary"
+                        color="info"
                         className="px-4"
                         type="submit"
                         disabled={createBookClubSubjectLoading || NameError}

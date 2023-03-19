@@ -13,7 +13,7 @@ import {
   CBadge,
 } from "@coreui/react";
 import Moment from "react-moment";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 
 import {
   bookclubApi,
@@ -87,7 +87,7 @@ const AllStudyGroups = () => {
               {isLoading || isFetching ? (
                 <>
                   <CTableRow>
-                    <CTableDataCell className="text-center" colSpan={7}>
+                    <CTableDataCell className="text-center" colSpan={8}>
                       Loading...
                     </CTableDataCell>
                   </CTableRow>
@@ -129,7 +129,9 @@ const AllStudyGroups = () => {
                         )}
                       </CTableDataCell>
                       <CTableDataCell>
-                        <CButton color="primary">Details</CButton>
+                        <Link to={`/allstudygroups/${item.id}`}>
+                          <CButton color="info">Details</CButton>
+                        </Link>
                         <div className="d-flex my-2">
                           {SubscriptionStudyGroupId == item.id ? (
                             <CButton

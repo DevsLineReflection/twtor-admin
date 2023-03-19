@@ -18,7 +18,6 @@ import axios from "../../lib/axios";
 
 const UserTrackings = () => {
   let navigate = useNavigate();
-  debugger;
   const queryPage = useLocation().search.match(/page=([0-9]+)/, "");
   const ipLocationNameEmail = useLocation().search;
   const ipLocationname = new URLSearchParams(ipLocationNameEmail).get("IP");
@@ -486,13 +485,12 @@ const UserTrackings = () => {
                   <td>{/* {val.AnonomyusEmail} */}</td>
                   <td>
                     <CButton
-                      color="primary"
+                      color="info"
                       variant="outline"
                       shape="square"
                       size="sm"
                       onClick={
                         () => {
-                          debugger;
                           navigate(`/usertrackings/1`);
                           // <Navigate to={`/userTrackings/1`} />;
                         }

@@ -114,7 +114,7 @@ const Country = () => {
         <CCardHeader className="d-flex justify-content-between">
           Twtor Countries
           <div className="d-flex justify-content-end">
-            <CButton className="" color="primary" onClick={toggleAddCountry}>
+            <CButton className="" color="info" onClick={toggleAddCountry}>
               Add Country
             </CButton>
           </div>

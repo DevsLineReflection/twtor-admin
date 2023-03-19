@@ -15,7 +15,6 @@ export const gradeApi = apiSlice.injectEndpoints({
         try {
           const result = await queryFulfilled;
           if (result.data) {
-            debugger;
             dispatch(
               apiSlice.util.updateQueryData("getgrade", undefined, (draft) => {
                 draft.push(result.data);

@@ -13,7 +13,7 @@ import {
   CBadge,
 } from "@coreui/react";
 import Moment from "react-moment";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 
 import GetBadge from "src/lib/GetBadge";
 import { useDispatch } from "react-redux";
@@ -111,7 +111,9 @@ const UserList = () => {
                       )}
                     </CTableDataCell>
                     <CTableDataCell>
-                      <CButton color="info">Details</CButton>
+                      <Link to={`/users/${item.id}`}>
+                        <CButton color="info">Details</CButton>
+                      </Link>
                     </CTableDataCell>
                   </CTableRow>
                 ))

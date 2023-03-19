@@ -14,7 +14,7 @@ export const userApi = apiSlice.injectEndpoints({
       async onQueryStarted(arg, { queryFulfilled, dispatch }) {
         try {
           const result = await queryFulfilled;
-          //debugger
+          //
           localStorage.setItem(
             "auth",
             JSON.stringify({
@@ -27,6 +27,16 @@ export const userApi = apiSlice.injectEndpoints({
               user: result.data,
             })
           );
+        } catch (err) {
+          // do nothing
+        }
+      },
+    }),
+    getUserById: builder.query({
+      query: (id) => `/api/admin/getUserById/${id}`,
+      async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+        try {
+          const result = await queryFulfilled;
         } catch (err) {
           // do nothing
         }
@@ -47,5 +57,6 @@ export const {
   useInviteMembersMutation,
   useGetUsersQuery,
   useGetUserReportQuery,
+  useGetUserByIdQuery,
 } = userApi;
 export const { getUser, getUsers } = userApi.endpoints;

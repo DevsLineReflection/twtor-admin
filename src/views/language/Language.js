@@ -47,7 +47,6 @@ const Language = () => {
   const shortNameChange = async (val) => {
     setShortName(val);
     axios.get(`/api/admin/check_shortname_language/${val}`).then((res) => {
-      debugger;
       if (!(res.data === 0)) {
         setShortNameError("Already Exists");
       } else {

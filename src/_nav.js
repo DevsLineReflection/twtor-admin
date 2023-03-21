@@ -282,6 +282,28 @@ const _nav = [
     to: "/language",
     icon: <CIcon icon={cilLanguage} customClassName="nav-icon" />,
   },
+  {
+    component: CNavGroup,
+    name: "CMS",
+    icon: <CIcon icon={cilPuzzle} customClassName="nav-icon" />,
+    items: [
+      {
+        component: CNavItem,
+        name: "Homepage",
+        to: "/homepage",
+      },
+      // {
+      //   component: CNavItem,
+      //   name: "Transaction",
+      //   to: "/karmapoint-transaction",
+      // },
+      // {
+      //   component: CNavItem,
+      //   name: "Settings",
+      //   to: "/karmapoint-settings",
+      // },
+    ],
+  },
 
   // {
   //   component: CNavItem,

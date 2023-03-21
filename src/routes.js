@@ -107,6 +107,7 @@ const StudyGroupSubjects = React.lazy(() =>
 const SubscriptionBand = React.lazy(() =>
   import("./views/subscriptionband/SubscriptionBand")
 );
+const Homepage = React.lazy(() => import("./views/homepage/Homepage"));
 
 const routes = [
   { path: "/", exact: true, name: "Home" },
@@ -135,6 +136,11 @@ const routes = [
     path: "/subscriptionband",
     name: "Subscription Band",
     element: SubscriptionBand,
+  },
+  {
+    path: "/homepage",
+    name: "Homepage",
+    element: Homepage,
   },
   {
     path: "/karmapoint-settings",

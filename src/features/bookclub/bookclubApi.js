@@ -68,6 +68,33 @@ export const bookclubApi = apiSlice.injectEndpoints({
         }
       },
     }),
+    updateBookClubSubscription: builder.mutation({
+      query: (data) => ({
+        url: "/api/admin/change_book_club_subscription",
+        method: "PUT",
+        body: data,
+      }),
+      async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+        try {
+          const result = await queryFulfilled;
+          if (result.data.staus == 200) {
+            dispatch(
+              apiSlice.util.updateQueryData(
+                "getbookclub",
+                arg.id.toString(),
+                (draft) => {
+                  draft = { ...draft, subscription_type: arg.val ? 1 : 0 };
+                  console.log(JSON.stringify(draft));
+                  return draft;
+                }
+              )
+            );
+          }
+        } catch (err) {
+          // do nothing
+        }
+      },
+    }),
   }),
 });
 
@@ -79,4 +106,5 @@ export const {
   useGetuserbookclubsQuery,
   useGetmemberbookclubsQuery,
   useGetBookclubReportQuery,
+  useUpdateBookClubSubscriptionMutation,
 } = bookclubApi;

@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useGetbookclubQuery } from "src/features/bookclub/bookclubApi";
+import {
+  useGetbookclubQuery,
+  useUpdateBookClubSubscriptionMutation,
+} from "src/features/bookclub/bookclubApi";
 import {
   CCard,
   CCardHeader,
@@ -17,6 +20,8 @@ import {
   CCol,
 } from "@coreui/react";
 import BookClubNavigation from "src/components/BookClubNavigation";
+import axios from "src/lib/axios";
+import Loader from "src/components/utils/Loader";
 
 function Studygroup() {
   const { id } = useParams();
@@ -26,6 +31,26 @@ function Studygroup() {
     error,
     isFetching,
   } = useGetbookclubQuery(id);
+  const [
+    updateBookClubSubscription,
+    { data, isLoading: updateBookClubSubscriptionLoading, error: updateError },
+  ] = useUpdateBookClubSubscriptionMutation();
+  const [SubsType, setSubsTYpe] = useState("");
+
+  useEffect(() => {
+    if (bookclub) {
+      setSubsTYpe(bookclub.subscription_type);
+    }
+  }, [bookclub]);
+
+  const changeSubscription = (val) => {
+    let data = {
+      id: bookclub.id,
+      subscription_type: val,
+    };
+    setSubsTYpe(val);
+    updateBookClubSubscription(data).then((res) => {});
+  };
 
   return (
     <CCard className="mb-4">
@@ -75,6 +100,34 @@ function Studygroup() {
               </b>
             </span>
           </CCol>
+          {(SubsType == 1 || SubsType == 0) && (
+            <CCol md={12}>
+              Study Group Type
+              <div className="form-check form-switch">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  role="switch"
+                  id="flexSwitchCheckDefault"
+                  checked={SubsType}
+                  onChange={(e) => changeSubscription(e.target.checked)}
+                  disabled={updateBookClubSubscriptionLoading}
+                />
+                <label
+                  className="form-check-label"
+                  htmlFor="flexSwitchCheckDefault"
+                >
+                  {SubsType == 0 ? "Free Subscription" : "Paid Subscription"}
+                </label>
+                {updateBookClubSubscriptionLoading && (
+                  <div className="font-weight-bold text-primary">
+                    Changing...
+                    <Loader />
+                  </div>
+                )}
+              </div>
+            </CCol>
+          )}
           <CCol md={12}>
             <BookClubNavigation
               bookclub={bookclub}

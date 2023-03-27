@@ -414,7 +414,7 @@ function BookClubNavigation({ bookclub, isOwner, isMember }) {
                                       }}
                                     ></h4>
                                   </div>
-                                  <div className="flex justify-center ">
+                                  {/* <div className="flex justify-center ">
                                     {soluation.solution_video ? (
                                       <div className="mb-3 bg-slate-100 rounded p-3 border border-slate-300">
                                         <b className="font-bold">
@@ -462,7 +462,7 @@ function BookClubNavigation({ bookclub, isOwner, isMember }) {
                                     ) : (
                                       ""
                                     )}
-                                  </div>
+                                  </div> */}
                                   <div className="flex justify-end">
                                     <div
                                       className="cursor-pointer"

@@ -26,11 +26,14 @@ import {
   useGetSubscriptionbandQuery,
 } from "src/features/subscriptionband/subscriptionbandApi";
 import Moment from "react-moment";
+import CIcon from "@coreui/icons-react";
+import { cilDollar } from "@coreui/icons";
 function SubscriptionBand() {
   const [subscriptionBand, setAddsubscriptionBand] = useState(false);
   const [Band_Name, setBand_Name] = useState("");
   const [Band_Type, setBand_Type] = useState("");
   const [Band_Range, setBand_Range] = useState("");
+  const [Band_Default_Price, setBand_Default_Price] = useState("");
 
   const {
     data: Subscriptionband,
@@ -48,6 +51,7 @@ function SubscriptionBand() {
       band_name: Band_Name,
       band_type: Band_Type,
       band_range: Band_Range,
+      band_default_price: Band_Default_Price,
     }).then((res) => {
       setAddsubscriptionBand(false);
       setBand_Name("");
@@ -108,6 +112,16 @@ function SubscriptionBand() {
                       required
                     />{" "}
                   </CInputGroup>
+                  <CInputGroup className="mb-3">
+                    <CFormInput
+                      type="number"
+                      placeholder="Band Deafult Price"
+                      min="1"
+                      value={Band_Default_Price}
+                      onChange={(e) => setBand_Default_Price(e.target.value)}
+                      required
+                    />{" "}
+                  </CInputGroup>
                   <CRow>
                     <CCol xs={6}>
                       <CButton
@@ -157,6 +171,7 @@ function SubscriptionBand() {
                 <CTableHeaderCell scope="col">Name</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Type</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Range</CTableHeaderCell>
+                <CTableHeaderCell scope="col">Price</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Created At</CTableHeaderCell>
                 {/* <CTableHeaderCell scope="col">Action</CTableHeaderCell> */}
               </CTableRow>
@@ -177,6 +192,11 @@ function SubscriptionBand() {
                     <CTableDataCell>{item.band_name}</CTableDataCell>
                     <CTableDataCell>{item.band_type}</CTableDataCell>
                     <CTableDataCell>{item.band_range}</CTableDataCell>
+                    <CTableDataCell>
+                      {" "}
+                      <CIcon icon={cilDollar} className="" />
+                      {item.band_price}
+                    </CTableDataCell>
                     <CTableDataCell>
                       {item.created_at ? (
                         <Moment format="DD-MMM-YYYY LT">

@@ -15,6 +15,7 @@ import countrySliceReducer from "../features/country/countrySlice";
 import subscriptionbandSliceReducer from "../features/subscriptionband/subscriptionbandSlice";
 import popularitySliceReducer from "../features/popularity/popularitySlice";
 import pagecontentSliceReducer from "../features/pagecontent/pagecontentSlice";
+import studygrouppriceSliceReducer from "../features/studygroupprice/studygrouppriceSlice";
 
 export const store = configureStore({
   reducer: {
@@ -33,6 +34,7 @@ export const store = configureStore({
     subscriptionband: subscriptionbandSliceReducer,
     popularity: popularitySliceReducer,
     pagecontent: pagecontentSliceReducer,
+    studygroupprice: studygrouppriceSliceReducer,
   },
   devTools: process.env.REACT_PUBLIC_ENV !== "production",
   middleware: (getDefaultMiddlewares) =>

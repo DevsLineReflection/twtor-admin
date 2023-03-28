@@ -156,7 +156,7 @@ const AllStudyGroups = () => {
                     <CTableRow>
                       <CTableDataCell colSpan={8}>
                         {SubscriptionStudyGroupId == item.id && (
-                          <StudyGroupPrice />
+                          <StudyGroupPrice studygroup={item.id} />
                         )}
                       </CTableDataCell>
                     </CTableRow>

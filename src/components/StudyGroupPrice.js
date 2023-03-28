@@ -1,13 +1,52 @@
 import { CButton, CCol } from "@coreui/react";
-import React from "react";
+import React, { useState } from "react";
 import { useGetSubscriptionbandQuery } from "src/features/subscriptionband/subscriptionbandApi";
 
-function StudyGroupPrice() {
+function StudyGroupPrice({studygroup}) {
   const {
     data: Subscriptionband,
     isLoading,
     error,
   } = useGetSubscriptionbandQuery();
+
+  // const [Price, setPrice] = useState('')
+  // const [IsPromo, setIsPromo] = useState('')
+  // const [PromoPrice, setPromoPrice] = useState('')
+  // const [FormDate, setFormDate] = useState('')
+  // const [ToDate, setToDate] = useState('')
+  // const [FromTime, setFromTime] = useState('')
+  // const [ToTime, setToTime] = useState('')
+  // let EachBandItem = {
+
+  // }
+
+  const [StudyGroupPrices,setStudyGroupPrices] = ('')
+
+  const StudyGroupPricesField = (item,key) => {
+    let findStudyGroupBand = StudyGroupPrices.find(i => i.band_id == item.id );
+    return findStudyGroupBand[key];
+  }
+  const StudyGroupPricesFieldChanges = (item,key,value) => {
+    setStudyGroupPrices((prev) => {
+      let copy = [...prev];
+      let studyGroupBandIndex = copy.findIndex(i => i.band_id === item.id);
+      if(studyGroupBandIndex >= 0) {
+        copy[studyGroupBandIndex] = {
+          ...copy[studyGroupBandIndex],
+          key:value
+        }        
+      } else {
+        copy.push({
+          band_id:item.id,
+          key:value
+        })
+      }
+    })
+  }
+
+  const savePrice = () => {
+    console.log(StudyGroupPrices)
+  }
 
   return (
     <>
@@ -36,9 +75,9 @@ function StudyGroupPrice() {
                 <td>
                   <input
                     type="number"
-                    name="I90Price"
-                    // value={I90Price}
-                    // onChange={(e) => setI90Price(e.target.value)}
+                    name="Price"
+                    value={StudyGroupPricesField(item,'Price')}
+                    onChange={(e) => StudyGroupPricesFieldChanges(item,'Price',e.target.value)}
                     required
                   />
                 </td>
@@ -46,21 +85,17 @@ function StudyGroupPrice() {
                 <td>
                   <input
                     type="checkbox"
-                    // checked={I90promotion}
-                    // onClick={(e) => setI90Promotion(e.target.checked)}
+                    value={StudyGroupPricesField(item,'IsPromo')}
+                    onChange={(e) => StudyGroupPricesFieldChanges(item,'IsPromo',e.target.value)}
                   ></input>
                 </td>
 
                 <td>
                   <input
                     type="number"
-                    name="I90PromotionalPrice"
-                    // value={I90PromotionalPrice}
-                    // onChange={(e) =>
-                    //   setI90PromotionalPrice(e.target.value)
-                    // }
-                    // disabled={!I90promotion}
-                    // required={I90promotion}
+                    name="PromoPrice"
+                    value={StudyGroupPricesField(item,'PromoPrice')}
+                    onChange={(e) => StudyGroupPricesFieldChanges(item,'PromoPrice',e.target.value)}
                   />
                 </td>
 
@@ -68,12 +103,8 @@ function StudyGroupPrice() {
                   <input
                     type="date"
                     name="FromDate"
-                    // value={I90PromotionalFromDate}
-                    // onChange={(e) =>
-                    //   setI90PromotionalFromDate(e.target.value)
-                    // }
-                    // disabled={!I90promotion}
-                    // required={I90promotion}
+                    value={StudyGroupPricesField(item,'FromDate')}
+                    onChange={(e) => StudyGroupPricesFieldChanges(item,'FromDate',e.target.value)}
                   />
                 </td>
 
@@ -81,43 +112,24 @@ function StudyGroupPrice() {
                   <input
                     type="date"
                     name="ToDate"
-                    // value={I90PromotionalToDate}
-                    // onChange={(e) =>
-                    //   setI90PromotionalToDate(e.target.value)
-                    // }
-                    // min={I90PromotionalFromDate}
-                    // disabled={!I90promotion}
-                    // required={I90promotion}
+                    value={StudyGroupPricesField(item,'ToDate')}
+                    onChange={(e) => StudyGroupPricesFieldChanges(item,'ToDate',e.target.value)}
                   />
                 </td>
                 <td>
                   <input
                     type="time"
-                    name="fromTime"
-                    // value={I90PromotionalFromTime}
-                    // onChange={(e) =>
-                    //   setI90PromotionalFromTime(e.target.value)
-                    // }
-                    // disabled={!I90promotion}
-                    // required={I90promotion}
+                    name="FromTime"
+                    value={StudyGroupPricesField(item,'FromTime')}
+                    onChange={(e) => StudyGroupPricesFieldChanges(item,'FromTime',e.target.value)}
                   />
                 </td>
                 <td>
                   <input
                     type="time"
                     name="ToTime"
-                    // value={I90PromotionalToTime}
-                    // onChange={(e) =>
-                    //   setI90PromotionalToTime(e.target.value)
-                    // }
-                    // // min={I90PromotionalFromTime}
-                    // min={
-                    //   I90PromotionalFromDate === I90PromotionalToDate
-                    //     ? I90PromotionalFromTime
-                    //     : ""
-                    // }
-                    // disabled={!I90promotion}
-                    // required={I90promotion}
+                    value={StudyGroupPricesField(item,'ToTime')}
+                    onChange={(e) => StudyGroupPricesFieldChanges(item,'ToTime',e.target.value)}
                   />
                 </td>
                 {/* <td>
@@ -129,7 +141,7 @@ function StudyGroupPrice() {
             ))}
             <tr>
               <td colspan={8} className="text-center">
-                <CButton type="submit" color="info">
+                <CButton type="button" color="info" onClick={() => savePrice()}>
                   Save
                 </CButton>
               </td>

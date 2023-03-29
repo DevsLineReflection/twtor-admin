@@ -16,7 +16,6 @@ export const subscriptionbandApi = apiSlice.injectEndpoints({
       }),
       async onQueryStarted(arg, { queryFulfilled, dispatch }) {
         try {
-    
         } catch (err) {
           // do nothing
         }
@@ -26,6 +25,7 @@ export const subscriptionbandApi = apiSlice.injectEndpoints({
 });
 
 export const {
-  useGetSubscriptionbandQuery,
-  useCreateSubscriptionbandMutation,
+  useCreatestudygrouppriceMutation,
+  useGetstudygrouppriceQuery,
+  useLazyGetstudygrouppricesQuery,
 } = subscriptionbandApi;

@@ -17,6 +17,7 @@ import { useGetUserReportQuery } from "src/features/user/userApi";
 import { useGetBookclubReportQuery } from "src/features/bookclub/bookclubApi";
 import { useGetKarmapointsBalanceQuery } from "src/features/karmapoint/karmapointApi";
 import millify from "millify";
+import { useGetTotalPaymentQuery } from "src/features/payment/paymentApi";
 
 const WidgetsDropdown = () => {
   const {
@@ -37,6 +38,14 @@ const WidgetsDropdown = () => {
     isLoading: totalKarmaPointLoading,
     error: totalKarmaPointError,
   } = useGetKarmapointsBalanceQuery();
+
+  const {
+    data: totalPayment,
+    isLoading: totalPaymentLoading,
+    error: totalPaymentError,
+  } = useGetTotalPaymentQuery();
+
+  console.log(totalPayment);
 
   const [userData, setUserData] = useState("");
   const [dataUserMonth, setDataUserMonth] = useState([
@@ -526,7 +535,7 @@ const WidgetsDropdown = () => {
             color="warning"
             value={
               <>
-                $500{" "}
+                ${totalPayment}{" "}
                 {/* <span className="fs-6 fw-normal">
                 (84.7% <CIcon icon={cilArrowTop} />)
               </span> */}

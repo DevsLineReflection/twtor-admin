@@ -78,6 +78,7 @@ const AllStudyGroups = () => {
                 <CTableHeaderCell scope="col">Access Right</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Subscription</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Active</CTableHeaderCell>
+                <CTableHeaderCell scope="col">Income</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Created By</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Created On</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Action</CTableHeaderCell>
@@ -118,6 +119,7 @@ const AllStudyGroups = () => {
                           {item.is_active ? "Active" : "Inactive"}
                         </CBadge>
                       </CTableDataCell>
+                      <CTableDataCell>${item.payments_sum_amount? item.payments_sum_amount : 0}</CTableDataCell>
                       <CTableDataCell>{item.owner.email}</CTableDataCell>
                       <CTableDataCell>
                         {item.created_at ? (

@@ -3,9 +3,9 @@ import { configureStore } from "@reduxjs/toolkit";
 import { apiSlice } from "../features/api/apiSlice";
 import authSliceReducer from "../features/auth/authSlice";
 import userSliceReducer from "../features/user/userSlice";
-import subjectSliceReducer from "../features/bookclubsubject/bookclubsubjectSlice";
+import subjectSliceReducer from "../features/studygroupsubject/studygroupsubjectSlice";
 import gradeSliceReducer from "../features/grade/gradeSlice";
-import bookclubSliceReducer from "../features/bookclub/bookclubSlice";
+import studygroupSliceReducer from "../features/studygroup/studygroupSlice";
 import chapterSliceReducer from "../features/chapter/chapterSlice";
 import problemSliceReducer from "../features/problem/problemSlice";
 import solutionSliceReducer from "../features/solution/solutionSlice";
@@ -23,7 +23,7 @@ export const store = configureStore({
     auth: authSliceReducer,
     user: userSliceReducer,
     subject: subjectSliceReducer,
-    bookclub: bookclubSliceReducer,
+    studygroup: studygroupSliceReducer,
     grade: gradeSliceReducer,
     chapter: chapterSliceReducer,
     problem: problemSliceReducer,

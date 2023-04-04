@@ -16,9 +16,9 @@ import Moment from "react-moment";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 
 import {
-  bookclubApi,
-  useGetbookclubsQuery,
-} from "src/features/bookclub/bookclubApi";
+  studygroupApi,
+  useGetstudygroupsQuery,
+} from "src/features/studygroup/studygroupApi";
 import GetBadge from "src/lib/GetBadge";
 import { useDispatch } from "react-redux";
 import StudyGroupPrice from "src/components/StudyGroupPrice";
@@ -29,18 +29,18 @@ const AllStudyGroups = () => {
   const [page, setPage] = useState(currentPage);
   const navigate = useNavigate();
   const {
-    data: bookclubs,
+    data: studygroups,
     isLoading,
     error,
     isFetching,
-  } = useGetbookclubsQuery(page);
+  } = useGetstudygroupsQuery(page);
   const dispatch = useDispatch();
 
   const [SubscriptionStudyGroupId, setSubscriptionStudyGroupId] = useState("");
 
   useEffect(() => {
     if (page > 1) {
-      dispatch(bookclubApi.endpoints.getbookclubs.initiate(page));
+      dispatch(studygroupApi.endpoints.getstudygroups.initiate(page));
     }
   }, [page, dispatch]);
 
@@ -94,7 +94,7 @@ const AllStudyGroups = () => {
                   </CTableRow>
                 </>
               ) : (
-                bookclubs?.data?.map((item) => (
+                studygroups?.data?.map((item) => (
                   <>
                     <CTableRow>
                       <CTableHeaderCell scope="row">{item.id}</CTableHeaderCell>
@@ -119,7 +119,12 @@ const AllStudyGroups = () => {
                           {item.is_active ? "Active" : "Inactive"}
                         </CBadge>
                       </CTableDataCell>
-                      <CTableDataCell>${item.payments_sum_amount? item.payments_sum_amount : 0}</CTableDataCell>
+                      <CTableDataCell>
+                        $
+                        {item.payments_sum_amount
+                          ? item.payments_sum_amount
+                          : 0}
+                      </CTableDataCell>
                       <CTableDataCell>{item.owner.email}</CTableDataCell>
                       <CTableDataCell>
                         {item.created_at ? (
@@ -167,11 +172,11 @@ const AllStudyGroups = () => {
               )}
             </CTableBody>
           </CTable>
-          {bookclubs?.data?.length > 0 ? (
+          {studygroups?.data?.length > 0 ? (
             <div className="d-flex justify-content-center">
               <nav aria-label="Page navigation">
                 <ul className="pagination">
-                  {bookclubs?.links?.map((item) => (
+                  {studygroups?.links?.map((item) => (
                     <li
                       className={`page-item ${item.label == page && "active"} ${
                         !item.url && "disabled"

@@ -18,7 +18,7 @@ import Loader from "./utils/Loader";
 import CKClassicEditor from "./CKClassicEditor";
 import { Helmet } from "react-helmet";
 
-function BookClubNavigation({ bookclub, isOwner, isMember }) {
+function StudyGroupNavigation({ studygroup, isOwner, isMember }) {
   const [createChapter, { isLoading: chapterIsLoading }] =
     useCreateChapterMutation();
   const [createProblem, { isLoading: problemIsLoading }] =
@@ -47,11 +47,11 @@ function BookClubNavigation({ bookclub, isOwner, isMember }) {
   const [selectedTreeProblemId, setSelectedTreeProblemId] = useState(0);
 
   let treeMenus =
-    bookclub &&
-    bookclub.books &&
-    bookclub.books.length > 0 &&
-    bookclub.books[0].chapter
-      ? bookclub.books[0].chapter
+    studygroup &&
+    studygroup.books &&
+    studygroup.books.length > 0 &&
+    studygroup.books[0].chapter
+      ? studygroup.books[0].chapter
       : [];
 
   const chapterTreeToggle = (e) => {
@@ -115,7 +115,7 @@ function BookClubNavigation({ bookclub, isOwner, isMember }) {
   const addProblem = () => {
     createProblem({
       chapter_id: singleChapterDetails.id,
-      bookclub_id: bookclub.id,
+      studygroup_id: studygroup.id,
       book_id: singleChapterDetails.book_id,
       title: problemTitle,
       description: problemText,
@@ -129,7 +129,7 @@ function BookClubNavigation({ bookclub, isOwner, isMember }) {
 
     let data = {
       problem_id: problem_id,
-      bookclub_id: bookclub.id,
+      studygroup_id: studygroup.id,
       book_id: singleChapterDetails.book_id,
       chapter_id: singleChapterDetails.id,
       details_solution: soluationText["p" + problem_id],
@@ -162,9 +162,9 @@ function BookClubNavigation({ bookclub, isOwner, isMember }) {
   const submitChapter = (e) => {
     e.preventDefault();
     createChapter({
-      bookclub_id: bookclub.id,
+      studygroup_id: studygroup.id,
       title: chapterName,
-      book_id: bookclub.books[0].id,
+      book_id: studygroup.books[0].id,
     }).then(() => {
       setChapterName("");
     });
@@ -198,7 +198,7 @@ function BookClubNavigation({ bookclub, isOwner, isMember }) {
     let data = {
       type_id: slutionId,
       problem_id: problemId,
-      bookclub_id: bookclub.id,
+      studygroup_id: studygroup.id,
       book_id: singleChapterDetails.book_id,
       chapter_id: singleChapterDetails.id,
       type: 0,
@@ -246,7 +246,7 @@ function BookClubNavigation({ bookclub, isOwner, isMember }) {
         <script src="https://cdn.tailwindcss.com" id="id_tailwind" />
       </Helmet> */}
 
-      {bookclub ? (
+      {studygroup ? (
         <div className="flex justify-between mt-5">
           <div className="w-1/4 border border-gray-400 rounded-md">
             <h3 className="text-lg font-semibold text-gray-700 py-2 pl-5 border-b-2">
@@ -637,4 +637,4 @@ function BookClubNavigation({ bookclub, isOwner, isMember }) {
   );
 }
 
-export default BookClubNavigation;
+export default StudyGroupNavigation;

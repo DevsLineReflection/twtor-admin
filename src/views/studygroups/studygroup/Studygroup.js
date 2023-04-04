@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import {
-  useGetbookclubQuery,
-  useUpdateBookClubSubscriptionMutation,
-} from "src/features/bookclub/bookclubApi";
+  useGetstudygroupQuery,
+  useUpdateStudyGroupSubscriptionMutation,
+} from "src/features/studygroup/studygroupApi";
 import {
   CCard,
   CCardHeader,
@@ -19,37 +19,41 @@ import {
   CRow,
   CCol,
 } from "@coreui/react";
-import BookClubNavigation from "src/components/BookClubNavigation";
+import StudyGroupNavigation from "src/components/StudyGroupNavigation";
 import axios from "src/lib/axios";
 import Loader from "src/components/utils/Loader";
 
 function Studygroup() {
   const { id } = useParams();
   const {
-    data: bookclub,
+    data: studygroup,
     isLoading,
     error,
     isFetching,
-  } = useGetbookclubQuery(id);
+  } = useGetstudygroupQuery(id);
   const [
-    updateBookClubSubscription,
-    { data, isLoading: updateBookClubSubscriptionLoading, error: updateError },
-  ] = useUpdateBookClubSubscriptionMutation();
+    updateStudyGroupSubscription,
+    {
+      data,
+      isLoading: updateStudyGroupSubscriptionLoading,
+      error: updateError,
+    },
+  ] = useUpdateStudyGroupSubscriptionMutation();
   const [SubsType, setSubsTYpe] = useState("");
 
   useEffect(() => {
-    if (bookclub) {
-      setSubsTYpe(bookclub.subscription_type);
+    if (studygroup) {
+      setSubsTYpe(studygroup.subscription_type);
     }
-  }, [bookclub]);
+  }, [studygroup]);
 
   const changeSubscription = (val) => {
     let data = {
-      id: bookclub.id,
+      id: studygroup.id,
       subscription_type: val,
     };
     setSubsTYpe(val);
-    updateBookClubSubscription(data).then((res) => {});
+    updateStudyGroupSubscription(data).then((res) => {});
   };
 
   return (
@@ -57,25 +61,25 @@ function Studygroup() {
       <CCardHeader>Twtor Study Group - {id}</CCardHeader>
       <CCardBody>
         <CRow className="justify-content-center">
-          <CCol md={12}>Name : {bookclub?.name}</CCol>
-          <CCol md={12}>Description : {bookclub?.description}</CCol>
+          <CCol md={12}>Name : {studygroup?.name}</CCol>
+          <CCol md={12}>Description : {studygroup?.description}</CCol>
           <CCol md={12}>
             <span>
               Chapters :{" "}
               <b>
-                {bookclub && bookclub.books && bookclub.books.length > 0
-                  ? bookclub.books[0].chapter.length
+                {studygroup && studygroup.books && studygroup.books.length > 0
+                  ? studygroup.books[0].chapter.length
                   : 0}
               </b>
             </span>
             <span className="mx-2">
               Problems :{" "}
               <b>
-                {bookclub &&
-                bookclub.books &&
-                bookclub.books.length > 0 &&
-                bookclub.books[0].chapter.length > 0
-                  ? bookclub.books[0].chapter.reduce((prev, item) => {
+                {studygroup &&
+                studygroup.books &&
+                studygroup.books.length > 0 &&
+                studygroup.books[0].chapter.length > 0
+                  ? studygroup.books[0].chapter.reduce((prev, item) => {
                       return prev + item.problems.length;
                     }, 0)
                   : 0}
@@ -84,11 +88,11 @@ function Studygroup() {
             <span>
               Solutions :{" "}
               <b>
-                {bookclub &&
-                bookclub.books &&
-                bookclub.books.length > 0 &&
-                bookclub.books[0].chapter.length > 0
-                  ? bookclub.books[0].chapter.reduce((prev, item) => {
+                {studygroup &&
+                studygroup.books &&
+                studygroup.books.length > 0 &&
+                studygroup.books[0].chapter.length > 0
+                  ? studygroup.books[0].chapter.reduce((prev, item) => {
                       return (
                         prev +
                         item.problems.reduce((prev, item) => {
@@ -111,7 +115,7 @@ function Studygroup() {
                   id="flexSwitchCheckDefault"
                   checked={SubsType}
                   onChange={(e) => changeSubscription(e.target.checked)}
-                  disabled={updateBookClubSubscriptionLoading}
+                  disabled={updateStudyGroupSubscriptionLoading}
                 />
                 <label
                   className="form-check-label"
@@ -119,7 +123,7 @@ function Studygroup() {
                 >
                   {SubsType == 0 ? "Free Subscription" : "Paid Subscription"}
                 </label>
-                {updateBookClubSubscriptionLoading && (
+                {updateStudyGroupSubscriptionLoading && (
                   <div className="font-weight-bold text-primary">
                     Changing...
                     <Loader />
@@ -129,8 +133,8 @@ function Studygroup() {
             </CCol>
           )}
           <CCol md={12}>
-            <BookClubNavigation
-              bookclub={bookclub}
+            <StudyGroupNavigation
+              studygroup={studygroup}
               isOwner={""}
               isMember={""}
             />

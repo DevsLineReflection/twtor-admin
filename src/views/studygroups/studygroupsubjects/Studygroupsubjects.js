@@ -22,27 +22,27 @@ import {
 
 import Moment from "react-moment";
 import {
-  useCreateBookClubSubjectsMutation,
-  useGetBookClubSubjectsQuery,
-} from "src/features/bookclubsubject/bookclubsubjectApi";
+  useCreateStudyGroupSubjectsMutation,
+  useGetStudyGroupSubjectsQuery,
+} from "src/features/studygroupsubject/studygroupsubjectApi";
 import axios from "src/lib/axios";
 
 const Studygroupsubjects = () => {
   const {
-    data: bookclubsubjects,
+    data: studygroupsubjects,
     isLoading,
     error,
-  } = useGetBookClubSubjectsQuery();
+  } = useGetStudyGroupSubjectsQuery();
   const [
-    createBookClubSubject,
-    { data, isLoading: createBookClubSubjectLoading, error: createError },
-  ] = useCreateBookClubSubjectsMutation();
+    createStudyGroupSubject,
+    { data, isLoading: createStudyGroupSubjectLoading, error: createError },
+  ] = useCreateStudyGroupSubjectsMutation();
 
-  const [addBookClubSunject, setAddBookClubSunject] = useState(false);
+  const [addStudyGroupSunject, setAddStudyGroupSunject] = useState(false);
   const [Name, setName] = useState("");
   const [NameError, setNameError] = useState("");
-  const toggleAddBookClubSunject = () => {
-    setAddBookClubSunject((prev) => !prev);
+  const toggleAddStudyGroupSunject = () => {
+    setAddStudyGroupSunject((prev) => !prev);
   };
 
   const subjectChange = async (val) => {
@@ -58,19 +58,19 @@ const Studygroupsubjects = () => {
 
   const submitForm = async (event) => {
     event.preventDefault();
-    createBookClubSubject({
+    createStudyGroupSubject({
       name: Name,
     }).then((res) => {
-      setAddBookClubSunject(false);
+      setAddStudyGroupSunject(false);
       setName("");
     });
   };
 
   return (
     <>
-      {addBookClubSunject && (
+      {addStudyGroupSunject && (
         <CCard className="mb-4">
-          <CCardHeader>Add Study Group Sunjects</CCardHeader>
+          <CCardHeader>Add Study Group Subjects</CCardHeader>
           <CCardBody className="justify-content-center">
             <CRow className="justify-content-center">
               <CCol md={5}>
@@ -93,10 +93,10 @@ const Studygroupsubjects = () => {
                         color="info"
                         className="px-4"
                         type="submit"
-                        disabled={createBookClubSubjectLoading || NameError}
+                        disabled={createStudyGroupSubjectLoading || NameError}
                       >
                         Add{" "}
-                        {createBookClubSubjectLoading && (
+                        {createStudyGroupSubjectLoading && (
                           <div
                             className="spinner-border spinner-grow-sm text-light "
                             role="status"
@@ -120,9 +120,9 @@ const Studygroupsubjects = () => {
             <CButton
               className=""
               color="primary"
-              onClick={toggleAddBookClubSunject}
+              onClick={toggleAddStudyGroupSunject}
             >
-              Add Study Group Sunjects
+              Add Study Group Subjects
             </CButton>
           </div>
         </CCardHeader>
@@ -145,7 +145,7 @@ const Studygroupsubjects = () => {
                   </CTableRow>
                 </>
               ) : (
-                bookclubsubjects?.map((item) => (
+                studygroupsubjects?.map((item) => (
                   <CTableRow>
                     <CTableHeaderCell scope="row">{item.id}</CTableHeaderCell>
                     <CTableDataCell>{item.name}</CTableDataCell>

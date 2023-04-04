@@ -63,7 +63,7 @@ function KarmaPointSettings() {
 
   useEffect(() => {
     if (karmaPointSettings && karmaPointSettings.length > 0) {
-      setPerStudyGroupCreation(karmaPointSettings[0].book_club_create);
+      setPerStudyGroupCreation(karmaPointSettings[0].study_group_create);
       setPerSolution(karmaPointSettings[0].soluation);
       setTwtorRegistration(karmaPointSettings[0].twtor_registration);
       setPerStudyGroupSubscription(
@@ -90,7 +90,7 @@ function KarmaPointSettings() {
   const submitForm = async (event) => {
     event.preventDefault();
     let data = {
-      book_club_create: PerStudyGroupCreation,
+      study_group_create: PerStudyGroupCreation,
       soluation: PerSolution,
       twtor_registration: TwtorRegistration,
       per_study_group_subscription: PerStudyGroupSubscription,

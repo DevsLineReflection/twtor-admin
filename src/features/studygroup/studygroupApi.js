@@ -1,25 +1,25 @@
 import { apiSlice } from "../api/apiSlice";
 
-export const bookclubApi = apiSlice.injectEndpoints({
+export const studygroupApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getbookclubs: builder.query({
-      query: (page = 1) => `/api/admin/bookclub?page=${page}`,
+    getstudygroups: builder.query({
+      query: (page = 1) => `/api/admin/studygroup?page=${page}`,
     }),
-    getuserbookclubs: builder.query({
-      query: (id) => `/api/admin/bookclub_user/${id}`,
+    getuserstudygroups: builder.query({
+      query: (id) => `/api/admin/studygroup_user/${id}`,
     }),
-    getmemberbookclubs: builder.query({
-      query: (id) => `/api/admin/user_bookclubs/${id}`,
+    getmemberstudygroups: builder.query({
+      query: (id) => `/api/admin/user_studygroups/${id}`,
     }),
-    getbookclub: builder.query({
-      query: (id) => `/api/admin/bookclub/${id}`,
+    getstudygroup: builder.query({
+      query: (id) => `/api/admin/studygroup/${id}`,
     }),
-    getBookclubReport: builder.query({
-      query: () => `/api/admin/getBookclubReport`,
+    getStudygroupReport: builder.query({
+      query: () => `/api/admin/getStudyGroupReport`,
     }),
-    createBookClub: builder.mutation({
+    createStudyGroup: builder.mutation({
       query: (formData) => ({
-        url: "/api/bookclub",
+        url: "/api/studygroup",
         method: "POST",
         body: formData,
         // headers: {
@@ -29,22 +29,22 @@ export const bookclubApi = apiSlice.injectEndpoints({
       async onQueryStarted(arg, { queryFulfilled, dispatch }) {
         try {
           const result = await queryFulfilled;
-          if (result.data.book_club) {
+          if (result.data.study_group) {
             dispatch(
               apiSlice.util.updateQueryData(
-                "getuserbookclubs",
+                "getuserstudygroups",
                 undefined,
                 (draft) => {
-                  draft.push(result.data.book_club);
+                  draft.push(result.data.study_group);
                 }
               )
             );
             dispatch(
               apiSlice.util.updateQueryData(
-                "getbookclubs",
+                "getstudygroups",
                 undefined,
                 (draft) => {
-                  draft.push(result.data.book_club);
+                  draft.push(result.data.study_group);
                 }
               )
             );
@@ -54,9 +54,9 @@ export const bookclubApi = apiSlice.injectEndpoints({
         }
       },
     }),
-    updateBookClub: builder.mutation({
+    updateStudyGroup: builder.mutation({
       query: (data) => ({
-        url: "/api/bookclub",
+        url: "/api/studygroup",
         method: "PUT",
         body: data,
       }),
@@ -68,9 +68,9 @@ export const bookclubApi = apiSlice.injectEndpoints({
         }
       },
     }),
-    updateBookClubSubscription: builder.mutation({
+    updateStudyGroupSubscription: builder.mutation({
       query: (data) => ({
-        url: "/api/admin/change_book_club_subscription",
+        url: "/api/admin/change_study_group_subscription",
         method: "PUT",
         body: data,
       }),
@@ -80,7 +80,7 @@ export const bookclubApi = apiSlice.injectEndpoints({
           if (result.data.staus == 200) {
             dispatch(
               apiSlice.util.updateQueryData(
-                "getbookclub",
+                "getstudygroup",
                 arg.id.toString(),
                 (draft) => {
                   draft = { ...draft, subscription_type: arg.val ? 1 : 0 };
@@ -99,12 +99,12 @@ export const bookclubApi = apiSlice.injectEndpoints({
 });
 
 export const {
-  useGetbookclubsQuery,
-  useGetbookclubQuery,
-  useCreateBookClubMutation,
-  useUpdateBookClubMutation,
-  useGetuserbookclubsQuery,
-  useGetmemberbookclubsQuery,
-  useGetBookclubReportQuery,
-  useUpdateBookClubSubscriptionMutation,
-} = bookclubApi;
+  useGetstudygroupsQuery,
+  useGetstudygroupQuery,
+  useCreateStudyGroupMutation,
+  useUpdateStudyGroupMutation,
+  useGetuserstudygroupsQuery,
+  useGetmemberstudygroupsQuery,
+  useGetStudygroupReportQuery,
+  useUpdateStudyGroupSubscriptionMutation,
+} = studygroupApi;

@@ -15,9 +15,9 @@ import {
 import { useGetUserByIdQuery } from "src/features/user/userApi";
 import { Link, useParams } from "react-router-dom";
 import {
-  useGetmemberbookclubsQuery,
-  useGetuserbookclubsQuery,
-} from "src/features/bookclub/bookclubApi";
+  useGetmemberstudygroupsQuery,
+  useGetuserstudygroupsQuery,
+} from "src/features/studygroup/studygroupApi";
 import GetBadge from "src/lib/GetBadge";
 import Moment from "react-moment";
 
@@ -25,15 +25,15 @@ function User() {
   const { id } = useParams();
   const { data: user, isLoading, error, isFetching } = useGetUserByIdQuery(id);
   const {
-    data: bookClubsOwner,
-    isLoading: bookClubsOwnerLoading,
-    error: bookClubsOwnerError,
-  } = useGetuserbookclubsQuery(id);
+    data: studyGroupsOwner,
+    isLoading: studyGroupsOwnerLoading,
+    error: studyGroupsOwnerError,
+  } = useGetuserstudygroupsQuery(id);
   const {
-    data: bookClubsMember,
-    isLoading: bookClubsMemberLoading,
-    error: bookClubsMemberError,
-  } = useGetmemberbookclubsQuery(id);
+    data: studyGroupsMember,
+    isLoading: studyGroupsMemberLoading,
+    error: studyGroupsMemberError,
+  } = useGetmemberstudygroupsQuery(id);
 
   return (
     <>
@@ -53,8 +53,8 @@ function User() {
               <CTableRow>
                 <CTableHeaderCell scope="col">
                   Study Group Owner :{" "}
-                  {!bookClubsOwnerLoading && bookClubsOwner ? (
-                    <>{bookClubsOwner.length}</>
+                  {!studyGroupsOwnerLoading && studyGroupsOwner ? (
+                    <>{studyGroupsOwner.length}</>
                   ) : (
                     <>0</>
                   )}
@@ -62,8 +62,8 @@ function User() {
                 <CTableHeaderCell scope="col">
                   <CTableHeaderCell scope="col">
                     Study Group Member :{" "}
-                    {!bookClubsMemberLoading && bookClubsMember ? (
-                      <>{bookClubsMember.length}</>
+                    {!studyGroupsMemberLoading && studyGroupsMember ? (
+                      <>{studyGroupsMember.length}</>
                     ) : (
                       <>0</>
                     )}
@@ -93,7 +93,7 @@ function User() {
               </CTableRow>
             </CTableHead>
             <CTableBody>
-              {bookClubsOwnerLoading ? (
+              {studyGroupsOwnerLoading ? (
                 <>
                   <CTableRow>
                     <CTableDataCell className="text-center" colSpan={9}>
@@ -103,7 +103,7 @@ function User() {
                 </>
               ) : (
                 <>
-                  {bookClubsOwner?.map((item) => (
+                  {studyGroupsOwner?.map((item) => (
                     <>
                       <CTableRow>
                         <CTableHeaderCell scope="row">
@@ -143,11 +143,11 @@ function User() {
                       </CTableRow>
                     </>
                   ))}
-                  {bookClubsMember?.map((item) => (
+                  {studyGroupsMember?.map((item) => (
                     <>
                       <CTableRow>
                         <CTableHeaderCell scope="row">
-                          {item.book_club_id}
+                          {item.study_group_id}
                         </CTableHeaderCell>
                         <CTableDataCell>{item.name}</CTableDataCell>
 

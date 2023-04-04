@@ -18,31 +18,31 @@ export const popularityApi = apiSlice.injectEndpoints({
           if (typeof result.data.popularity == "object") {
             dispatch(
               apiSlice.util.updateQueryData(
-                "getbookclub",
-                arg.bookclub_id.toString(),
+                "getstudygroup",
+                arg.studygroup_id.toString(),
                 (draft) => {
-                  const bookclub_book_index = draft.books.findIndex(
+                  const studygroup_book_index = draft.books.findIndex(
                     (c) => parseInt(c.id) == arg.book_id
                   );
-                  const bookclub_book_chapter_index = draft.books[
-                    bookclub_book_index
+                  const studygroup_book_chapter_index = draft.books[
+                    studygroup_book_index
                   ].chapter.findIndex((c) => parseInt(c.id) == arg.chapter_id);
-                  const bookclub_book_chapter_problem_index = draft.books[
-                    bookclub_book_index
-                  ].chapter[bookclub_book_chapter_index].problems.findIndex(
+                  const studygroup_book_chapter_problem_index = draft.books[
+                    studygroup_book_index
+                  ].chapter[studygroup_book_chapter_index].problems.findIndex(
                     (c) => parseInt(c.id) == arg.problem_id
                   );
-                  const bookclub_book_chapter_problem_solutiom_index =
-                    draft.books[bookclub_book_index].chapter[
-                      bookclub_book_chapter_index
+                  const studygroup_book_chapter_problem_solutiom_index =
+                    draft.books[studygroup_book_index].chapter[
+                      studygroup_book_chapter_index
                     ].problems[
-                      bookclub_book_chapter_problem_index
+                      studygroup_book_chapter_problem_index
                     ].soluation.findIndex((c) => parseInt(c.id) == arg.type_id);
 
-                  draft.books[bookclub_book_index].chapter[
-                    bookclub_book_chapter_index
-                  ].problems[bookclub_book_chapter_problem_index].soluation[
-                    bookclub_book_chapter_problem_solutiom_index
+                  draft.books[studygroup_book_index].chapter[
+                    studygroup_book_chapter_index
+                  ].problems[studygroup_book_chapter_problem_index].soluation[
+                    studygroup_book_chapter_problem_solutiom_index
                   ].total_popularity.push(result.data.popularity);
                   console.log(JSON.stringify(draft));
                   return draft;
@@ -63,41 +63,41 @@ export const popularityApi = apiSlice.injectEndpoints({
             if (result.data.popularity) {
               dispatch(
                 apiSlice.util.updateQueryData(
-                  "getbookclub",
-                  arg.bookclub_id.toString(),
+                  "getstudygroup",
+                  arg.studygroup_id.toString(),
                   (draft) => {
-                    const bookclub_book_index = draft.books.findIndex(
+                    const studygroup_book_index = draft.books.findIndex(
                       (c) => parseInt(c.id) == arg.book_id
                     );
-                    const bookclub_book_chapter_index = draft.books[
-                      bookclub_book_index
+                    const studygroup_book_chapter_index = draft.books[
+                      studygroup_book_index
                     ].chapter.findIndex(
                       (c) => parseInt(c.id) == arg.chapter_id
                     );
-                    const bookclub_book_chapter_problem_index = draft.books[
-                      bookclub_book_index
-                    ].chapter[bookclub_book_chapter_index].problems.findIndex(
+                    const studygroup_book_chapter_problem_index = draft.books[
+                      studygroup_book_index
+                    ].chapter[studygroup_book_chapter_index].problems.findIndex(
                       (c) => parseInt(c.id) == arg.problem_id
                     );
-                    const bookclub_book_chapter_problem_solutiom_index =
-                      draft.books[bookclub_book_index].chapter[
-                        bookclub_book_chapter_index
+                    const studygroup_book_chapter_problem_solutiom_index =
+                      draft.books[studygroup_book_index].chapter[
+                        studygroup_book_chapter_index
                       ].problems[
-                        bookclub_book_chapter_problem_index
+                        studygroup_book_chapter_problem_index
                       ].soluation.findIndex(
                         (c) => parseInt(c.id) == arg.type_id
                       );
 
-                    draft.books[bookclub_book_index].chapter[
-                      bookclub_book_chapter_index
-                    ].problems[bookclub_book_chapter_problem_index].soluation[
-                      bookclub_book_chapter_problem_solutiom_index
+                    draft.books[studygroup_book_index].chapter[
+                      studygroup_book_chapter_index
+                    ].problems[studygroup_book_chapter_problem_index].soluation[
+                      studygroup_book_chapter_problem_solutiom_index
                     ].total_popularity = draft.books[
-                      bookclub_book_index
-                    ].chapter[bookclub_book_chapter_index].problems[
-                      bookclub_book_chapter_problem_index
+                      studygroup_book_index
+                    ].chapter[studygroup_book_chapter_index].problems[
+                      studygroup_book_chapter_problem_index
                     ].soluation[
-                      bookclub_book_chapter_problem_solutiom_index
+                      studygroup_book_chapter_problem_solutiom_index
                     ].total_popularity.filter(
                       (item) => !(item.id == result.data.popularity)
                     );

@@ -58,7 +58,7 @@ function Homepage() {
     }
 
     if (key) {
-      axios.get(`/api/admin/search_bookclub/${key}`).then((res) => {
+      axios.get(`/api/admin/search_studygroup/${key}`).then((res) => {
         if (res.data) {
           setList(res.data);
         }

@@ -14,7 +14,7 @@ import { CChartBar, CChartLine } from "@coreui/react-chartjs";
 import CIcon from "@coreui/icons-react";
 import { cilArrowBottom, cilArrowTop, cilOptions } from "@coreui/icons";
 import { useGetUserReportQuery } from "src/features/user/userApi";
-import { useGetBookclubReportQuery } from "src/features/bookclub/bookclubApi";
+import { useGetStudygroupReportQuery } from "src/features/studygroup/studygroupApi";
 import { useGetKarmapointsBalanceQuery } from "src/features/karmapoint/karmapointApi";
 import millify from "millify";
 import { useGetTotalPaymentQuery } from "src/features/payment/paymentApi";
@@ -28,10 +28,10 @@ const WidgetsDropdown = () => {
   } = useGetUserReportQuery();
 
   const {
-    data: bookclubReport,
-    isLoading: bookclubLoading,
-    error: bookclubError,
-  } = useGetBookclubReportQuery();
+    data: studygroupReport,
+    isLoading: studygroupLoading,
+    error: studygroupError,
+  } = useGetStudygroupReportQuery();
 
   const {
     data: totalKarmaPoint,
@@ -51,10 +51,10 @@ const WidgetsDropdown = () => {
   const [dataUserMonth, setDataUserMonth] = useState([
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
   ]);
-  const [dataBookclubMonth, setDataBookclubMonth] = useState([
+  const [dataStudygroupMonth, setDataStudygroupMonth] = useState([
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
   ]);
-  const [bookclubData, setbookclubData] = useState("");
+  const [studygroupData, setstudygroupData] = useState("");
 
   const getTotalByMonth = (month) => {
     if (userReport.report) {
@@ -66,9 +66,11 @@ const WidgetsDropdown = () => {
     }
     return 0;
   };
-  const getTotalBookclubByMonth = (month) => {
-    if (bookclubReport.report) {
-      let findItem = bookclubReport.report?.find((item) => item.month == month);
+  const getTotalStudygroupByMonth = (month) => {
+    if (studygroupReport.report) {
+      let findItem = studygroupReport.report?.find(
+        (item) => item.month == month
+      );
 
       if (findItem) {
         return findItem.total;
@@ -95,21 +97,21 @@ const WidgetsDropdown = () => {
     ]);
   }
 
-  if (!bookclubLoading && bookclubReport && !bookclubData) {
-    setbookclubData(bookclubReport.report);
-    setDataBookclubMonth([
-      getTotalBookclubByMonth("January"),
-      getTotalBookclubByMonth("February"),
-      getTotalBookclubByMonth("March"),
-      getTotalBookclubByMonth("April"),
-      getTotalBookclubByMonth("May"),
-      getTotalBookclubByMonth("June"),
-      getTotalBookclubByMonth("July"),
-      getTotalBookclubByMonth("August"),
-      getTotalBookclubByMonth("September"),
-      getTotalBookclubByMonth("October"),
-      getTotalBookclubByMonth("November"),
-      getTotalBookclubByMonth("December"),
+  if (!studygroupLoading && studygroupReport && !studygroupData) {
+    setstudygroupData(studygroupReport.report);
+    setDataStudygroupMonth([
+      getTotalStudygroupByMonth("January"),
+      getTotalStudygroupByMonth("February"),
+      getTotalStudygroupByMonth("March"),
+      getTotalStudygroupByMonth("April"),
+      getTotalStudygroupByMonth("May"),
+      getTotalStudygroupByMonth("June"),
+      getTotalStudygroupByMonth("July"),
+      getTotalStudygroupByMonth("August"),
+      getTotalStudygroupByMonth("September"),
+      getTotalStudygroupByMonth("October"),
+      getTotalStudygroupByMonth("November"),
+      getTotalStudygroupByMonth("December"),
     ]);
   }
 
@@ -232,8 +234,8 @@ const WidgetsDropdown = () => {
             color="info"
             value={
               <>
-                {bookclubReport && bookclubReport.total
-                  ? bookclubReport.total
+                {studygroupReport && studygroupReport.total
+                  ? studygroupReport.total
                   : "..."}{" "}
                 {/* <span className="fs-6 fw-normal">
                 (40.9% <CIcon icon={cilArrowTop} />)
@@ -285,7 +287,7 @@ const WidgetsDropdown = () => {
                       backgroundColor: "transparent",
                       borderColor: "rgba(255,255,255,.55)",
                       pointBackgroundColor: getStyle("--cui-info"),
-                      data: dataBookclubMonth,
+                      data: dataStudygroupMonth,
                     },
                   ],
                 }}

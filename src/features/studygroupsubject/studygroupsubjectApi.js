@@ -1,13 +1,13 @@
 import { apiSlice } from "../api/apiSlice";
 
-export const bookclubsubjectApi = apiSlice.injectEndpoints({
+export const studtgroupsubjectApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getBookClubSubjects: builder.query({
-      query: () => `/api/bookclubsubject`,
+    getStudyGroupSubjects: builder.query({
+      query: () => `/api/studygroupsubject`,
     }),
-    createBookClubSubjects: builder.mutation({
+    createStudyGroupSubjects: builder.mutation({
       query: (data) => ({
-        url: "/api/admin/bookclubsubject",
+        url: "/api/admin/studygroupsubject",
         method: "POST",
         body: data,
       }),
@@ -17,7 +17,7 @@ export const bookclubsubjectApi = apiSlice.injectEndpoints({
           if (result.data) {
             dispatch(
               apiSlice.util.updateQueryData(
-                "getBookClubSubjects",
+                "getStudyGroupSubjects",
                 undefined,
                 (draft) => {
                   draft.push(result.data);
@@ -34,6 +34,6 @@ export const bookclubsubjectApi = apiSlice.injectEndpoints({
 });
 
 export const {
-  useGetBookClubSubjectsQuery,
-  useCreateBookClubSubjectsMutation,
-} = bookclubsubjectApi;
+  useGetStudyGroupSubjectsQuery,
+  useCreateStudyGroupSubjectsMutation,
+} = studtgroupsubjectApi;

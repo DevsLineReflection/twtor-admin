@@ -1,4 +1,4 @@
-import { apiSlice } from '../api/apiSlice'
+import { apiSlice } from "../api/apiSlice";
 
 export const bookApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -7,31 +7,39 @@ export const bookApi = apiSlice.injectEndpoints({
     }),
     createChapter: builder.mutation({
       query: (data) => ({
-        url: '/api/chapter',
-        method: 'POST',
+        url: "/api/chapter",
+        method: "POST",
         body: data,
       }),
       async onQueryStarted(arg, { queryFulfilled, dispatch }) {
         try {
-          const result = await queryFulfilled
-          if (result.data.book_club_chapter && result.data.book_club_chapter.book_id) {
+          const result = await queryFulfilled;
+          if (
+            result.data.study_group_chapter &&
+            result.data.study_group_chapter.book_id
+          ) {
             dispatch(
-              apiSlice.util.updateQueryData('getbookclub', arg.bookclub_id.toString(), (draft) => {
-                const bookclub_book_index = draft.books.findIndex(
-                  (c) => parseInt(c.id) == result.data.book_club_chapter.book_id,
-                )
+              apiSlice.util.updateQueryData(
+                "getstudygroup",
+                arg.studygroup_id.toString(),
+                (draft) => {
+                  const studygroup_book_index = draft.books.findIndex(
+                    (c) =>
+                      parseInt(c.id) == result.data.study_group_chapter.book_id
+                  );
 
-                draft.books[bookclub_book_index] = {
-                  ...draft.books[bookclub_book_index],
-                  chapter: [
-                    ...draft.books[bookclub_book_index].chapter,
-                    result.data.book_club_chapter,
-                  ],
+                  draft.books[studygroup_book_index] = {
+                    ...draft.books[studygroup_book_index],
+                    chapter: [
+                      ...draft.books[studygroup_book_index].chapter,
+                      result.data.study_group_chapter,
+                    ],
+                  };
+                  console.log(JSON.stringify(draft));
+                  return draft;
                 }
-                console.log(JSON.stringify(draft))
-                return draft
-              }),
-            )
+              )
+            );
           }
         } catch (err) {
           // do nothing
@@ -40,19 +48,23 @@ export const bookApi = apiSlice.injectEndpoints({
     }),
     updateChapter: builder.mutation({
       query: (data) => ({
-        url: '/api/chapter',
-        method: 'PUT',
+        url: "/api/chapter",
+        method: "PUT",
         body: data,
       }),
       async onQueryStarted(arg, { queryFulfilled, dispatch }) {
         try {
-          const result = await queryFulfilled
+          const result = await queryFulfilled;
         } catch (err) {
           // do nothing
         }
       },
     }),
   }),
-})
+});
 
-export const { useGetChaptersQuery, useCreateChapterMutation, useUpdateChapterMutation } = bookApi
+export const {
+  useGetChaptersQuery,
+  useCreateChapterMutation,
+  useUpdateChapterMutation,
+} = bookApi;

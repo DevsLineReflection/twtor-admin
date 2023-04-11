@@ -33,7 +33,15 @@ function SubscriptionBand() {
   const [Band_Name, setBand_Name] = useState("");
   const [Band_Type, setBand_Type] = useState("");
   const [Band_Range, setBand_Range] = useState("");
+  const [SubscriptionOption, setSubscriptionOption] = useState(0);
+  const [NumberOfLiveSession, setNumberOfLiveSession] = useState("");
   const [Band_Default_Price, setBand_Default_Price] = useState("");
+
+  const Subscription_Option_Type = {
+    0: "Platform",
+    1: "Live Session",
+    2: "Combine",
+  };
 
   const {
     data: Subscriptionband,
@@ -52,6 +60,8 @@ function SubscriptionBand() {
       band_type: Band_Type,
       band_range: Band_Range,
       band_default_price: Band_Default_Price,
+      subscription_option: SubscriptionOption,
+      number_of_live_session: NumberOfLiveSession,
     }).then((res) => {
       setAddsubscriptionBand(false);
       setBand_Name("");
@@ -112,6 +122,82 @@ function SubscriptionBand() {
                       required
                     />{" "}
                   </CInputGroup>
+                  <div className="mb-3">
+                    <label>Select Subscription for -</label>
+                    <div className="form-check">
+                      <input
+                        className="form-check-input"
+                        type="radio"
+                        name="flexRadioDefault"
+                        id="flexRadioDefault1"
+                        // value={0}
+                        onChange={() => {
+                          setSubscriptionOption(0);
+                        }}
+                        checked={SubscriptionOption == 0}
+                        required
+                      />
+                      <label
+                        className="form-check-label"
+                        htmlFor="flexRadioDefault1"
+                      >
+                        Platform
+                      </label>
+                    </div>
+                    <div className="form-check">
+                      <input
+                        className="form-check-input"
+                        type="radio"
+                        name="flexRadioDefault"
+                        id="flexRadioDefault2"
+                        // value={1}
+                        onChange={() => {
+                          setSubscriptionOption(1);
+                        }}
+                        checked={SubscriptionOption == 1}
+                        required
+                      />
+                      <label
+                        className="form-check-label"
+                        htmlFor="flexRadioDefault2"
+                      >
+                        Live Session
+                      </label>
+                    </div>
+                    <div className="form-check">
+                      <input
+                        className="form-check-input"
+                        type="radio"
+                        name="flexRadioDefault"
+                        id="flexRadioDefault3"
+                        // value={2}
+                        onChange={() => {
+                          setSubscriptionOption(2);
+                        }}
+                        checked={SubscriptionOption == 2}
+                        required
+                      />
+                      <label
+                        className="form-check-label"
+                        htmlFor="flexRadioDefault3"
+                      >
+                        Combine
+                      </label>
+                    </div>
+                  </div>
+                  {SubscriptionOption != 0 && (
+                    <CInputGroup className="mb-3">
+                      <CFormInput
+                        type="number"
+                        placeholder="Number of Live Session"
+                        min="1"
+                        value={NumberOfLiveSession}
+                        onChange={(e) => setNumberOfLiveSession(e.target.value)}
+                        required={SubscriptionOption != 0}
+                      />{" "}
+                    </CInputGroup>
+                  )}
+
                   <CInputGroup className="mb-3">
                     <CFormInput
                       type="number"
@@ -171,6 +257,10 @@ function SubscriptionBand() {
                 <CTableHeaderCell scope="col">Name</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Type</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Range</CTableHeaderCell>
+                <CTableHeaderCell scope="col">
+                  Subscription Option
+                </CTableHeaderCell>
+                <CTableHeaderCell scope="col">Live Session</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Price</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Created At</CTableHeaderCell>
                 {/* <CTableHeaderCell scope="col">Action</CTableHeaderCell> */}
@@ -180,7 +270,7 @@ function SubscriptionBand() {
               {isLoading ? (
                 <>
                   <CTableRow>
-                    <CTableDataCell className="text-center" colSpan={5}>
+                    <CTableDataCell className="text-center" colSpan={8}>
                       Loading...
                     </CTableDataCell>
                   </CTableRow>
@@ -192,6 +282,14 @@ function SubscriptionBand() {
                     <CTableDataCell>{item.band_name}</CTableDataCell>
                     <CTableDataCell>{item.band_type}</CTableDataCell>
                     <CTableDataCell>{item.band_range}</CTableDataCell>
+                    <CTableDataCell>
+                      {Subscription_Option_Type[item.subscription_option]}
+                    </CTableDataCell>
+                    <CTableDataCell>
+                      {item.number_of_live_session
+                        ? item.number_of_live_session
+                        : "N/A"}
+                    </CTableDataCell>
                     <CTableDataCell>
                       {" "}
                       <CIcon icon={cilDollar} className="" />

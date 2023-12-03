@@ -45,7 +45,9 @@ const AppSidebar = () => {
       }}
     >
       <CSidebarBrand className="d-none d-md-flex" to="/">
-        {!unfoldable && <img src={Logo} alt="Logo" />}
+        {!unfoldable && (
+          <img src={Logo} alt="Logo" style={{ width: "120px" }} />
+        )}
       </CSidebarBrand>
       <CSidebarNav>
         <SimpleBar>

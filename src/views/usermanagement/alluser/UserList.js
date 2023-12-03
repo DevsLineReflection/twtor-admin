@@ -11,6 +11,10 @@ import {
   CTableDataCell,
   CTable,
   CBadge,
+  CDropdownItem,
+  CDropdownMenu,
+  CDropdownToggle,
+  CDropdown,
 } from "@coreui/react";
 import Moment from "react-moment";
 import { useNavigate, useLocation, Link } from "react-router-dom";
@@ -18,6 +22,8 @@ import { useNavigate, useLocation, Link } from "react-router-dom";
 import GetBadge from "src/lib/GetBadge";
 import { useDispatch } from "react-redux";
 import { useGetUsersQuery, userApi } from "src/features/user/userApi";
+import { cilList } from "@coreui/icons";
+import CIcon from "@coreui/icons-react";
 
 const UserList = () => {
   const queryPage = useLocation().search.match(/page=([0-9]+)/, "");
@@ -111,9 +117,26 @@ const UserList = () => {
                       )}
                     </CTableDataCell>
                     <CTableDataCell>
-                      <Link to={`/users/${item.id}`}>
-                        <CButton color="info">Details</CButton>
-                      </Link>
+                      <CDropdown>
+                        <CDropdownToggle color="secondary">
+                          <CIcon icon={cilList} size="xl" />
+                        </CDropdownToggle>
+                        <CDropdownMenu>
+                          <CDropdownItem>
+                            <Link
+                              to={`/users/${item.id}`}
+                              style={{ textDecoration: "none" }}
+                            >
+                              <div>Details</div>
+                            </Link>
+                          </CDropdownItem>
+                          <CDropdownItem
+                          // onClick={() => changeStudyGroupStatus(item)}
+                          >
+                            {item.is_active == 1 ? "Deactivate" : "Activate"}
+                          </CDropdownItem>
+                        </CDropdownMenu>
+                      </CDropdown>
                     </CTableDataCell>
                   </CTableRow>
                 ))

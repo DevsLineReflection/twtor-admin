@@ -11,6 +11,10 @@ import {
   CTableDataCell,
   CTable,
   CBadge,
+  CDropdown,
+  CDropdownToggle,
+  CDropdownMenu,
+  CDropdownItem,
 } from "@coreui/react";
 import Moment from "react-moment";
 import { useNavigate, useLocation, Link } from "react-router-dom";
@@ -18,10 +22,14 @@ import { useNavigate, useLocation, Link } from "react-router-dom";
 import {
   studygroupApi,
   useGetstudygroupsQuery,
+  useUpdateStudyGroupStatusMutation,
 } from "src/features/studygroup/studygroupApi";
 import GetBadge from "src/lib/GetBadge";
 import { useDispatch } from "react-redux";
 import StudyGroupPrice from "src/components/StudyGroupPrice";
+import CIcon from "@coreui/icons-react";
+import { cilList } from "@coreui/icons";
+import Swal from "sweetalert2";
 
 const AllStudyGroups = () => {
   const queryPage = useLocation().search.match(/page=([0-9]+)/, "");
@@ -35,6 +43,30 @@ const AllStudyGroups = () => {
     isFetching,
   } = useGetstudygroupsQuery(page);
   const dispatch = useDispatch();
+  const [
+    updateStudyGroupStatus,
+    { data, isLoading: updateStudyGroupStatusLoading, error: updateError },
+  ] = useUpdateStudyGroupStatusMutation();
+
+  const changeStudyGroupStatus = (item) => {
+    Swal.fire({
+      title:
+        item.is_active == 1
+          ? "Do you want to deactivate this Study Group?"
+          : "Do you want to activate this Study Group?",
+      showDenyButton: false,
+      showCancelButton: true,
+      confirmButtonText: "Ok",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        updateStudyGroupStatus({
+          id: item.id,
+          status: item.is_active == 1 ? 0 : 1,
+          page,
+        });
+      }
+    });
+  };
 
   const [SubscriptionStudyGroupId, setSubscriptionStudyGroupId] = useState("");
 
@@ -116,7 +148,7 @@ const AllStudyGroups = () => {
                       </CTableDataCell>
                       <CTableDataCell>
                         <CBadge color={GetBadge(item.is_active)}>
-                          {item.is_active ? "Active" : "Inactive"}
+                          {item.is_active ? "Active" : "Deactive"}
                         </CBadge>
                       </CTableDataCell>
                       <CTableDataCell>
@@ -136,28 +168,49 @@ const AllStudyGroups = () => {
                         )}
                       </CTableDataCell>
                       <CTableDataCell>
-                        <Link to={`/allstudygroups/${item.id}`}>
-                          <CButton color="info">Details</CButton>
-                        </Link>
-                        <div className="d-flex my-2">
-                          {SubscriptionStudyGroupId == item.id ? (
-                            <CButton
-                              color="warning"
-                              onClick={() => setSubscriptionStudyGroupId("")}
+                        <CDropdown>
+                          <CDropdownToggle color="secondary">
+                            <CIcon icon={cilList} size="xl" />
+                          </CDropdownToggle>
+                          <CDropdownMenu>
+                            <CDropdownItem>
+                              <Link
+                                to={`/allstudygroups/${item.id}`}
+                                style={{ textDecoration: "none" }}
+                              >
+                                <div>Details</div>
+                              </Link>
+                            </CDropdownItem>
+                            <CDropdownItem>
+                              <div className="d-flex my-2">
+                                {SubscriptionStudyGroupId == item.id ? (
+                                  <div
+                                    style={{ cursor: "pointer" }}
+                                    onClick={() =>
+                                      setSubscriptionStudyGroupId("")
+                                    }
+                                  >
+                                    Hide
+                                  </div>
+                                ) : (
+                                  <div
+                                    style={{ cursor: "pointer" }}
+                                    onClick={() =>
+                                      setSubscriptionStudyGroupId(item.id)
+                                    }
+                                  >
+                                    Add Subscription
+                                  </div>
+                                )}
+                              </div>
+                            </CDropdownItem>
+                            <CDropdownItem
+                              onClick={() => changeStudyGroupStatus(item)}
                             >
-                              Hide
-                            </CButton>
-                          ) : (
-                            <CButton
-                              color="success"
-                              onClick={() =>
-                                setSubscriptionStudyGroupId(item.id)
-                              }
-                            >
-                              Add Subscription
-                            </CButton>
-                          )}
-                        </div>
+                              {item.is_active == 1 ? "Deactivate" : "Activate"}
+                            </CDropdownItem>
+                          </CDropdownMenu>
+                        </CDropdown>
                       </CTableDataCell>
                     </CTableRow>
                     <CTableRow>

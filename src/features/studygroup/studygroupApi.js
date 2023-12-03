@@ -4,6 +4,7 @@ export const studygroupApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getstudygroups: builder.query({
       query: (page = 1) => `/api/admin/studygroup?page=${page}`,
+      providesTags: ["study_groups"],
     }),
     getuserstudygroups: builder.query({
       query: (id) => `/api/admin/studygroup_user/${id}`,
@@ -95,6 +96,21 @@ export const studygroupApi = apiSlice.injectEndpoints({
         }
       },
     }),
+    updateStudyGroupStatus: builder.mutation({
+      query: (data) => ({
+        url: `/api/admin/study-group-status-change/${data.id}`,
+        method: "PUT",
+        body: data,
+      }),
+      async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+        try {
+          const result = await queryFulfilled;
+        } catch (err) {
+          // do nothing
+        }
+      },
+      invalidatesTags: ["study_groups"],
+    }),
   }),
 });
 
@@ -107,4 +123,5 @@ export const {
   useGetmemberstudygroupsQuery,
   useGetStudygroupReportQuery,
   useUpdateStudyGroupSubscriptionMutation,
+  useUpdateStudyGroupStatusMutation,
 } = studygroupApi;

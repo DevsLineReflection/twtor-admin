@@ -1,6 +1,6 @@
-import React from 'react'
-import { NavLink } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'
+import React from "react";
+import { NavLink } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 import {
   CContainer,
   CHeader,
@@ -10,31 +10,33 @@ import {
   CHeaderToggler,
   CNavLink,
   CNavItem,
-} from '@coreui/react'
-import CIcon from '@coreui/icons-react'
-import { cilBell, cilEnvelopeOpen, cilList, cilMenu } from '@coreui/icons'
+} from "@coreui/react";
+import CIcon from "@coreui/icons-react";
+import { cilBell, cilEnvelopeOpen, cilList, cilMenu } from "@coreui/icons";
 
-import { AppBreadcrumb } from './index'
-import { AppHeaderDropdown } from './header/index'
+import { AppBreadcrumb } from "./index";
+import { AppHeaderDropdown } from "./header/index";
 // import { logo } from 'src/assets/brand/logo'
-import { changeSidebarShow } from 'src/features/sidebar/sidebarSlice'
-import Logo from 'src/assets/brand/logo.png'
+import { changeSidebarShow } from "src/features/sidebar/sidebarSlice";
+import Logo from "src/assets/brand/logo.png";
 
 const AppHeader = () => {
-  const dispatch = useDispatch()
-  const { sidebarShow } = useSelector((state) => state.sidebar)
+  const dispatch = useDispatch();
+  const { sidebarShow } = useSelector((state) => state.sidebar);
 
   return (
     <CHeader position="sticky" className="mb-4">
       <CContainer fluid>
         <CHeaderToggler
           className="ps-1"
-          onClick={() => dispatch(dispatch(changeSidebarShow({ sidebarShow: !sidebarShow })))}
+          onClick={() =>
+            dispatch(dispatch(changeSidebarShow({ sidebarShow: !sidebarShow })))
+          }
         >
           <CIcon icon={cilMenu} size="lg" />
         </CHeaderToggler>
         <CHeaderBrand className="mx-auto d-md-none" to="/">
-          <img src={Logo} alt="Logo" />
+          <img src={Logo} alt="Logo" style={{ width: "120px" }} />
         </CHeaderBrand>
         <CHeaderNav className="d-none d-md-flex me-auto">
           <CNavItem>
@@ -75,7 +77,7 @@ const AppHeader = () => {
         <AppBreadcrumb />
       </CContainer>
     </CHeader>
-  )
-}
+  );
+};
 
-export default AppHeader
+export default AppHeader;

@@ -63,12 +63,12 @@ const Zoom = () => {
       debugger;
       setAddZoomAccount(false);
       setZoomAccountEmail("");
-      setZoomAccountOauthClienIdsetZoomAccountEmail("");
+      setZoomAccountOauthClienId("");
       setZoomAccountSdkClienId("");
-      setZoomAccountOauthClienSecretsetZoomAccountEmail("");
-      setZoomAccountSdkClienSecretsetZoomAccountEmail("");
-      setWebHookClienSecretsetZoomAccountEmail("");
-      setAccountTypesetZoomAccountEmail(0);
+      setZoomAccountOauthClienSecret("");
+      setZoomAccountSdkClienSecret("");
+      setWebHookClienSecret("");
+      setAccountType(0);
     });
   };
 

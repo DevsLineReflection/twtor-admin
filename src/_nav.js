@@ -283,6 +283,12 @@ const _nav = [
     icon: <CIcon icon={cilLanguage} customClassName="nav-icon" />,
   },
   {
+    component: CNavItem,
+    name: "Zoom",
+    to: "/zoom-account",
+    icon: <CIcon icon={cilLanguage} customClassName="nav-icon" />,
+  },
+  {
     component: CNavGroup,
     name: "CMS",
     icon: <CIcon icon={cilPuzzle} customClassName="nav-icon" />,

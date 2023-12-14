@@ -11,6 +11,7 @@ import problemSliceReducer from "../features/problem/problemSlice";
 import solutionSliceReducer from "../features/solution/solutionSlice";
 import sidebarSliceReducer from "../features/sidebar/sidebarSlice";
 import languageSliceReducer from "../features/language/languageSlice";
+import zoomSliceReducer from "../features/zoom/zoomSlice";
 import countrySliceReducer from "../features/country/countrySlice";
 import subscriptionbandSliceReducer from "../features/subscriptionband/subscriptionbandSlice";
 import popularitySliceReducer from "../features/popularity/popularitySlice";
@@ -30,6 +31,7 @@ export const store = configureStore({
     solution: solutionSliceReducer,
     sidebar: sidebarSliceReducer,
     language: languageSliceReducer,
+    zoom: zoomSliceReducer,
     country: countrySliceReducer,
     subscriptionband: subscriptionbandSliceReducer,
     popularity: popularitySliceReducer,

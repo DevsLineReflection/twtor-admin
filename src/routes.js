@@ -93,6 +93,7 @@ const Karmapoint = React.lazy(() => import("./views/karmapoints/Karmapoint"));
 const KarmapointSettings = React.lazy(() =>
   import("./views/karmapoints/KarmaPointSettings")
 );
+const Zoom = React.lazy(() => import("./views/zoom/Zoom"));
 const KarmapointTransaction = React.lazy(() =>
   import("./views/karmapoints/Transaction")
 );
@@ -136,6 +137,11 @@ const routes = [
     path: "/subscriptionband",
     name: "Subscription Band",
     element: SubscriptionBand,
+  },
+  {
+    path: "/zoom-account",
+    name: "Zoom Account",
+    element: Zoom,
   },
   {
     path: "/homepage",

@@ -293,10 +293,15 @@ const _nav = [
     name: "CMS",
     icon: <CIcon icon={cilPuzzle} customClassName="nav-icon" />,
     items: [
+      // {
+      //   component: CNavItem,
+      //   name: "Homepage",
+      //   to: "/homepage",
+      // },
       {
         component: CNavItem,
-        name: "Homepage",
-        to: "/homepage",
+        name: "Testimonial",
+        to: "/testimonial",
       },
       // {
       //   component: CNavItem,

@@ -109,6 +109,7 @@ const SubscriptionBand = React.lazy(() =>
   import("./views/subscriptionband/SubscriptionBand")
 );
 const Homepage = React.lazy(() => import("./views/homepage/Homepage"));
+const Testimonial = React.lazy(() => import("./views/testimonial/Testimonial"));
 
 const routes = [
   { path: "/", exact: true, name: "Home" },
@@ -144,9 +145,9 @@ const routes = [
     element: Zoom,
   },
   {
-    path: "/homepage",
-    name: "Homepage",
-    element: Homepage,
+    path: "/testimonial",
+    name: "Testimonial",
+    element: Testimonial,
   },
   {
     path: "/karmapoint-settings",

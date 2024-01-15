@@ -17,24 +17,25 @@ import {
   CInputGroup,
   CInputGroupText,
   CFormInput,
-  CFormSelect,
   CFormLabel,
+  CFormCheck,
   CFormTextarea,
   CFormSwitch,
-  CFormCheck,
 } from "@coreui/react";
-import axios from "src/lib/axios";
 import {
-  useCreatepagecontentMutation,
-  useGetpagecontentQuery,
-} from "src/features/pagecontent/pagecontentApi";
-import { useCreateTestimonialMutation } from "src/features/testimonial/testimonialApi";
+  useCreateLanguageMutation,
+  useGetLanguageQuery,
+} from "src/features/language/languageApi";
+import axios from "../../lib/axios";
+import { useCreateTestimonialMutation, useGetTestimonialsQuery } from "src/features/testimonial/testimonialApi";
 
-function Testimonial() {
+const Testimonial = () => {
+  const { data: testimonial, isLoading, error } = useGetTestimonialsQuery();
   const [
     createTestimonial,
     { data, isLoading: isLoadingBC, errorBC },
-] = useCreateTestimonialMutation()
+  ] = useCreateTestimonialMutation()
+  const [addTestimonial, setAddTestimonial] = useState(false);
   const [WriterName, setWriterName] = useState('')
   const [WriterType, setWriterType] = useState(1)
   const [WriterReview, setWriterReview] = useState('')
@@ -64,13 +65,26 @@ function Testimonial() {
       setWriterType(1);
     });
   }
+  
+
   return (
-    <CCard className="mb-4">
-      <CCardHeader className="d-flex justify-content-between">
-        Twtor Testimonial
-      </CCardHeader>
-      <CCardBody>
-        <CRow className="justify-content-center">
+    <>
+      {addTestimonial && (
+        <CCard className="mb-4">
+          <CCardHeader className="d-flex justify-content-between">
+            Add Testimonial
+            <div className="d-flex justify-content-end">
+              <CButton
+                className=""
+                color="warning"
+                onClick={() => setAddTestimonial(false)}
+              >
+                Close
+              </CButton>
+            </div>
+          </CCardHeader>
+          <CCardBody className="justify-content-center">
+          <CRow className="justify-content-center">
           <CCol md={5}>
             <CForm onSubmit={handleSubmit}>
               <CFormLabel>Writer Name</CFormLabel>
@@ -126,9 +140,55 @@ function Testimonial() {
             </CForm>
           </CCol>
         </CRow>
-      </CCardBody>
-    </CCard>
+          </CCardBody>
+        </CCard>
+      )}
+      <CCard className="mb-4">
+        <CCardHeader className="d-flex justify-content-between">
+          Twtor Testimonials
+          {!addTestimonial && (
+            <div className="d-flex justify-content-end">
+              <CButton
+                className=""
+                color="info"
+                onClick={() => setAddTestimonial(true)}
+              >
+                Add Testimonial
+              </CButton>
+            </div>
+          )}
+        </CCardHeader>
+        <CCardBody>
+          <CTable striped>
+            <CTableHead>
+              <CTableRow>
+                <CTableHeaderCell scope="col">Writer Name</CTableHeaderCell>
+                <CTableHeaderCell scope="col">Review</CTableHeaderCell>
+                <CTableHeaderCell scope="col">Writer Type</CTableHeaderCell>
+                <CTableHeaderCell scope="col">Status</CTableHeaderCell>
+              </CTableRow>
+            </CTableHead>
+            <CTableBody>
+              {isLoading ? (
+                <div className="text-center">Loading...</div>
+              ) : (
+                testimonial?.map((item) => (
+                  <CTableRow>
+                    <CTableHeaderCell scope="row">{item.writer_name}</CTableHeaderCell>
+                    <CTableDataCell>{item.review}</CTableDataCell>
+                    <CTableDataCell>{item.writer_type ? 'Twtor' : 'Student'}</CTableDataCell>
+                    <CTableDataCell>
+                    <CFormSwitch label="Publish Testimonial" id={item.id} defaultChecked={item.status} />
+                    </CTableDataCell>
+                  </CTableRow>
+                ))
+              )}
+            </CTableBody>
+          </CTable>
+        </CCardBody>
+      </CCard>
+    </>
   );
-}
+};
 
 export default Testimonial;

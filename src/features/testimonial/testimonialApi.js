@@ -33,4 +33,4 @@ export const testimonialApi = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useCreateTestimonialMutation, useGetTestimonialMutation } = testimonialApi;
+export const { useCreateTestimonialMutation, useGetTestimonialsQuery } = testimonialApi;

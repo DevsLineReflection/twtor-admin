@@ -27,7 +27,7 @@ import {
   useGetLanguageQuery,
 } from "src/features/language/languageApi";
 import axios from "../../lib/axios";
-import { useCreateTestimonialMutation, useGetTestimonialsQuery } from "src/features/testimonial/testimonialApi";
+import { useCreateTestimonialMutation, useGetTestimonialsQuery, useUpdateTestimonialStatusMutation } from "src/features/testimonial/testimonialApi";
 
 const Testimonial = () => {
   const { data: testimonial, isLoading, error } = useGetTestimonialsQuery();
@@ -35,6 +35,9 @@ const Testimonial = () => {
     createTestimonial,
     { data, isLoading: isLoadingBC, errorBC },
   ] = useCreateTestimonialMutation()
+  const [
+    updateTestimonialStatus,{isLoading: isLoadingTestimonialStatusUpdate}
+  ] = useUpdateTestimonialStatusMutation()
   const [addTestimonial, setAddTestimonial] = useState(false);
   const [WriterName, setWriterName] = useState('')
   const [WriterType, setWriterType] = useState(1)
@@ -50,6 +53,11 @@ const Testimonial = () => {
       setWriterType(1)
     }
   }
+
+  const handleChangeStatus = (e,item) => {
+    updateTestimonialStatus({id:item.id,status: e.target.checked ? 1:0})
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -63,6 +71,7 @@ const Testimonial = () => {
       setWriterReview('');
       setWriterName('');
       setWriterType(1);
+      setAddTestimonial(false);
     });
   }
   
@@ -175,10 +184,10 @@ const Testimonial = () => {
                 testimonial?.map((item) => (
                   <CTableRow>
                     <CTableHeaderCell scope="row">{item.writer_name}</CTableHeaderCell>
-                    <CTableDataCell>{item.review}</CTableDataCell>
-                    <CTableDataCell>{item.writer_type ? 'Twtor' : 'Student'}</CTableDataCell>
+                    <CTableDataCell>{`${item.review.slice(0, 10)} ${item.review.length > 10 ? "..." : "" }`}</CTableDataCell>
+                    <CTableDataCell>{item.user_type ? 'Twtor' : 'Student'}</CTableDataCell>
                     <CTableDataCell>
-                    <CFormSwitch label="Publish Testimonial" id={item.id} defaultChecked={item.status} />
+                    <CFormSwitch label="" id={item.id} disabled={isLoadingTestimonialStatusUpdate} defaultChecked={item.status == 1} onChange={e => handleChangeStatus(e,item)}/>
                     </CTableDataCell>
                   </CTableRow>
                 ))

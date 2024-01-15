@@ -20,7 +20,34 @@ export const testimonialApi = apiSlice.injectEndpoints({
                 "getTestimonials",
                 undefined,
                 (draft) => {
-                  draft.push(result.data);
+                  draft.unshift(result.data);
+                }
+              )
+            );
+          }
+        } catch (err) {
+          // do nothing
+        }
+      },
+    }),
+    updateTestimonialStatus: builder.mutation({
+      query: (data) => ({
+        url: "/api/admin/testimonial-status",
+        method: "POST",
+        body: data,
+      }),
+      async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+        try {
+          const result = await queryFulfilled;
+          if (result.data) {
+            dispatch(
+              apiSlice.util.updateQueryData(
+                "getTestimonials",
+                undefined,
+                (draft) => {
+                  let findIndex = draft.findIndex(item => item.id == result.id);
+                  draft[findIndex] = result.data;
+                  return draft;
                 }
               )
             );
@@ -33,4 +60,4 @@ export const testimonialApi = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useCreateTestimonialMutation, useGetTestimonialsQuery } = testimonialApi;
+export const { useCreateTestimonialMutation, useGetTestimonialsQuery, useUpdateTestimonialStatusMutation } = testimonialApi;
